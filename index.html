@@ -14,9 +14,24 @@
     <h2>Learning content</h2> <!-- This is heading 2-->
     <p>Here is a list with dates what I am learning and from where. This list will be as a guide what was learned, from where and what details I have learned</p>
 
+    <!--here I am making quick links inside the html page to jump to desired section by using section ID-->
+    <nav>
+        <ul>
+            <li>
+                <a href="#HTML_Learning">Learning HTML</a>
+            </li>
+            <li>
+                <a href="HTML_Do_Not_Know">WHat I do not Know About HTML</a>
+            </li>
+            <li>
+                <a href="HTML_Learned">What I Have Learned</a>
+            </li>
+        </ul>
+    </nav>
+
     <!--hr or horizontal rule is a line that is used to divide the section on the page-->
     <hr>
-    <section>
+    <section id="HTML_Learning">
         <ul>
             <li>I am learning HTML basics</li>        
             <li>
@@ -68,13 +83,22 @@
                             <li>New tag element "&lt;strong&gt; &lt;/strong&gt;" that makes word <strong>BOLD</strong> like this word.</li>
                         </ul>
                     </li>
+                    <li>8.2.2024 
+                        <ul>
+                            <li>HTML semantic section &lt;semantic&gt; to easily jump somewhere in the content with a link. Section tag element should have id ="xx" where xx is the ID name that will be used to jump to this section
+                            </li>
+                            <li>
+                                using # as a direct link to get to the top of the page. I have added at the bottom "Back to the top" that helps return at the start of the page
+                            </li> 
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul>
     </section>
     <hr>
 
-    <section>
+    <section id ="HTML_Do_Not_Know">
         <h2>What I do Not Know or Understand</h2>
         <p>As I have started I do not understand certain parts inside the HTML code:</p>
         <ul>
@@ -87,14 +111,21 @@
         </ul>
     </section>
     <hr>
-    <section >
+    <section id="HTML_Learned">
         <h2>What I Have Learned Up to Now</h2>
         <p>I see it would be good to write here what I have learned up to now to track the progress.</p>
         <ol>
             <li>5.2.2024 - how to add the icon for the website. It is added inside the head section, with link element. I had to upload the image icon inside the working folder so I can use in on the website.</li>
-            <li>7.2.2024 - How to use some of the new tag elements like strong, description list, abbreviation tag</li>
+            <li>
+                7.2.2024 - How to use some of the new tag elements like strong, description list, abbreviation tag
+            </li>
+            <li>
+                8.2.2024 - how to use section tag element and how to use # to get to specific part of the page
+            </li>
         </ol>
     </section>
+
+    <p><a href="#">Back to the top</a></p>
 
 </body>
 </html>
