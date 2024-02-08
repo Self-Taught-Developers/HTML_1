@@ -13,79 +13,88 @@
 
     <h2>Learning content</h2> <!-- This is heading 2-->
     <p>Here is a list with dates what I am learning and from where. This list will be as a guide what was learned, from where and what details I have learned</p>
-    <ul>
-        <li>I am learning HTML basics</li>        
-        <li>
-            <ul>
-                <li>31.1.2024 Udemy Course Web Development - Only HTML part</li>
-                <li>31.1.2024 Traversy Media Youtube HTML crash course - 1h long
-                    <ul>
-                        <!--If you want to make nested list you cannot use <ul> list under <ol>
-                        It will not work. But if you use <ul> under <ul> then you will have nested list-->
-                        <li>Here is my comment on the Traversy Media HTML Crash Course. As it looks there are missing basic steps that I think it would be very useful</li>
-                    </ul>
-                </li>
-                <li>1.2.2024 Free Code Camp HTML course - 4h long
-                    <ul>
-                        <li><a href ="./html-free-code-camp.html">Free Code Camp HTML Course Review</a> </li>
-                        <li>5.2.2024 - added website icon inside the head section with link element</li>
-                        <li>I have added Icon, but on the server I had an issue where image was not visible for some reason.
+
+    <!--hr or horizontal rule is a line that is used to divide the section on the page-->
+    <hr>
+    <section>
+        <ul>
+            <li>I am learning HTML basics</li>        
+            <li>
+                <ul>
+                    <li>31.1.2024 Udemy Course Web Development - Only HTML part</li>
+                    <li>31.1.2024 Traversy Media Youtube HTML crash course - 1h long
+                        <ul>
+                            <!--If you want to make nested list you cannot use <ul> list under <ol>
+                            It will not work. But if you use <ul> under <ul> then you will have nested list-->
+                            <li>Here is my comment on the Traversy Media HTML Crash Course. As it looks there are missing basic steps that I think it would be very useful</li>
+                        </ul>
+                    </li>
+                    <li>1.2.2024 Free Code Camp HTML course - 4h long
+                        <ul>
+                            <li><a href ="./html-free-code-camp.html">Free Code Camp HTML Course Review</a> </li>
+                            <li>5.2.2024 - added website icon inside the head section with link element</li>
+                            <li>I have added Icon, but on the server I had an issue where image was not visible for some reason.
+                                <br>
+                            First it was the path to the image was not correct. I had to change that so it works on the server.
                             <br>
-                        First it was the path to the image was not correct. I had to change that so it works on the server.
-                        <br>
-                        Then I have tested website on the link <a href ="https://validator.w3.org/">HTML Validator</a> which gave me details are there any errors on my HTML document. Which is great information to fix any errors in the HTML document - VS Code do not give these errors so this tool helped a lot.
-                        <br>
-                        Then I had an issue that I have put &lt;ol&gt; tag and &lt;&gt; inside ol and ul tag which is not allowed. I need to put them inside &lt;li&gt; tag
-                        </li>
-                    </ul>
-                </li>
-                <li>7.2.2024 HTML entities
-                    <ul>
-                        <li>There is "& nbsp ;" that I can use to add a space inside the paragraph. You can find more entities <a href ="https://developer.mozilla.org/en-US/docs/Glossary/Entity">here</a>.                       
-                        Entities are additional tool you can see to insert inside the paragraps, like white space, writing HTML tags to be visible as a plain text. A helpful tool.
-                        </li>               
-                
-                        <li>Then we have other elements that I can use and those are:
-                            
-                            - &lt;abbr&gt; &lt;/abbr&gt; that gives me a way to add a text that you will see as a description if you move your mouse over that word. Just like the example here <abbr title ="Mozilla Developer Network">MDN</abbr> where MDN has dots below and when you put your mouse over it, it will show what it means.
-                            
-                            - &lt;address&gt; &lt;/address&gt; is the second one tag element that I can use to have address in Italic. Like example here:
-                            
-                            <address>Dubrovnik, Croatia</address>
-                        </li>
-                        <li>
-                            List Types:
-                            <ul>
-                                <li>Unordered list - here is the tag element "&lt;ul&gt; &lt;/ul&gt;" and inside we add "&lt;li&gt; &lt;/li&gt;" tag</li>
-                                <li>Ordered list - here is the tag element"&lt;ol&gt; &lt;/ol&gt;" and inside we add "&lt;li&gt; &lt;/li&gt;" tag</li>
-                                <li>Description list - here is the tag element "&lt;dl&gt; &lt;/dl&gt;" and inside we add "&lt;dt&gt; &lt;/dt&gt;" tag which is description term dl, and then "&lt;dd&gt; &lt;/dd&gt;" which is description detail dd</li>
-                            </ul>
-                        </li>
-                        <li>New tag element "&lt;strong&gt; &lt;/strong&gt;" that makes word <strong>BOLD</strong> like this word.</li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    
+                            Then I have tested website on the link <a href ="https://validator.w3.org/">HTML Validator</a> which gave me details are there any errors on my HTML document. Which is great information to fix any errors in the HTML document - VS Code do not give these errors so this tool helped a lot.
+                            <br>
+                            Then I had an issue that I have put &lt;ol&gt; tag and &lt;&gt; inside ol and ul tag which is not allowed. I need to put them inside &lt;li&gt; tag
+                            </li>
+                        </ul>
+                    </li>
+                    <li>7.2.2024 HTML entities
+                        <ul>
+                            <li>There is "& nbsp ;" that I can use to add a space inside the paragraph. You can find more entities <a href ="https://developer.mozilla.org/en-US/docs/Glossary/Entity">here</a>.                       
+                            Entities are additional tool you can see to insert inside the paragraps, like white space, writing HTML tags to be visible as a plain text. A helpful tool.
+                            </li>               
+                    
+                            <li>Then we have other elements that I can use and those are:
+                                
+                                - &lt;abbr&gt; &lt;/abbr&gt; that gives me a way to add a text that you will see as a description if you move your mouse over that word. Just like the example here <abbr title ="Mozilla Developer Network">MDN</abbr> where MDN has dots below and when you put your mouse over it, it will show what it means.
+                                
+                                - &lt;address&gt; &lt;/address&gt; is the second one tag element that I can use to have address in Italic. Like example here:
+                                
+                                <address>Dubrovnik, Croatia</address>
+                            </li>
+                            <li>
+                                List Types:
+                                <ul>
+                                    <li>Unordered list - here is the tag element "&lt;ul&gt; &lt;/ul&gt;" and inside we add "&lt;li&gt; &lt;/li&gt;" tag</li>
+                                    <li>Ordered list - here is the tag element"&lt;ol&gt; &lt;/ol&gt;" and inside we add "&lt;li&gt; &lt;/li&gt;" tag</li>
+                                    <li>Description list - here is the tag element "&lt;dl&gt; &lt;/dl&gt;" and inside we add "&lt;dt&gt; &lt;/dt&gt;" tag which is description term dl, and then "&lt;dd&gt; &lt;/dd&gt;" which is description detail dd</li>
+                                </ul>
+                            </li>
+                            <li>New tag element "&lt;strong&gt; &lt;/strong&gt;" that makes word <strong>BOLD</strong> like this word.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <hr>
 
-    <h2>What I do Not Know or Understand</h2>
-    <p>As I have started I do not understand certain parts inside the HTML code:</p>
-    <ul>
-        <li>Why we use !DOCTYPE at the start. What does it represents</li>
-        <li>Why is html in the first paragraph together with the !DOCTYPE</li>
-        <li>why do we have meta charset, meta name, meta content</li>
-        <li>Details that are added inside the link element like the "rel", "type" wher I have added icon for a website. Now you can see website icon in the browser - "LTD" icon</li>
-        <li>What means Render or Parsed</li>
-        <li>how to create category page and add new pages inside that category so I can categorize pages on the live website</li>
-    </ul>
-
-    <h2>What I Have Learned Up to Now</h2>
-    <p>I see it would be good to write here what I have learned up to now to track the progress.</p>
-    <ol>
-        <li>5.2.2024 - how to add the icon for the website. It is added inside the head section, with link element. I had to upload the image icon inside the working folder so I can use in on the website.</li>
-        <li>7.2.2024 - How to use some of the new tag elements like strong, description list, abbreviation tag</li>
-    </ol>
+    <section>
+        <h2>What I do Not Know or Understand</h2>
+        <p>As I have started I do not understand certain parts inside the HTML code:</p>
+        <ul>
+            <li>Why we use !DOCTYPE at the start. What does it represents</li>
+            <li>Why is html in the first paragraph together with the !DOCTYPE</li>
+            <li>why do we have meta charset, meta name, meta content</li>
+            <li>Details that are added inside the link element like the "rel", "type" wher I have added icon for a website. Now you can see website icon in the browser - "LTD" icon</li>
+            <li>What means Render or Parsed</li>
+            <li>how to create category page and add new pages inside that category so I can categorize pages on the live website</li>
+        </ul>
+    </section>
+    <hr>
+    <section >
+        <h2>What I Have Learned Up to Now</h2>
+        <p>I see it would be good to write here what I have learned up to now to track the progress.</p>
+        <ol>
+            <li>5.2.2024 - how to add the icon for the website. It is added inside the head section, with link element. I had to upload the image icon inside the working folder so I can use in on the website.</li>
+            <li>7.2.2024 - How to use some of the new tag elements like strong, description list, abbreviation tag</li>
+        </ol>
+    </section>
 
 </body>
 </html>
