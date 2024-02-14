@@ -1,404 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta
-			name="description"
-			content="Self-Taught Developer Journey With Step by Step Taken to become a programmer"
-		/>
-		<meta name="Author" content="Frano Grgić" />
-		<link rel="icon" href="Images/STDIcon.png" type="image/x-icon" />
-		<title>Welcome</title>
-	</head>
-	<body>
-		<!--adding header section into the web page-->
-		<header>
-			<h1>Welcome to Self-Taught Developer Website</h1>
 
-			<p>
-				Here is a list with dates what I am learning and from where. This list
-				will be as a guide what was learned, from where and what details I have
-				learned
-			</p>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Self-Taught Developer Journey With Step by Step Taken to become a programmer">
+	<meta name="Author" content="Frano Grgić">
+	<link rel="icon" href="Images/STDIcon.png" type="image/x-icon">
+	<title>Welcome</title>
+</head>
 
-			<!--here I am making quick links inside the html page to jump to desired section by using section ID. For that it is used nav tag that emphasize that inside we have navigation links-->
-			<nav>
-				<ul>
-					<li>
-						<a href="#HTML_Learning">Learning HTML</a>
-					</li>
-					<li>
-						<a href="#HTML_Do_Not_Know">WHat I do not Know About HTML</a>
-					</li>
-					<li>
-						<a href="#HTML_Learned">What I Have Learned</a>
-					</li>
-				</ul>
-			</nav>
-			<!--adding image as a logo for the website-->
-			<figure>
-				<img
-					src="Images/STDIcon.png"
-					alt="Self-Taught Developer icon"
-					title="STD icon image"
-					height="200"
-					width="200"
-					loading="lazy"
-				/>
-				<!--adding figcaption which is a text below the image to explain what this image is about-->
-				<figcaption>Self-Taught Developer Icon adding</figcaption>
-			</figure>
-		</header>
-		<!--adding main section into the web page-->
-		<main>
-			<!--hr or horizontal rule is a line that is used to divide the section on the page-->
-			<hr />
-			<section id="HTML_Learning">
-				<h2>Learning Content</h2>
-				<ul>
-					<li>I am learning HTML basics</li>
-					<li>
-						<ul>
-							<li>31.1.2024 Udemy Course Web Development - Only HTML part</li>
-							<li>
-								31.1.2024 Traversy Media Youtube HTML crash course - 1h long
-								<ul>
-									<!--If you want to make nested list you cannot use <ul> list under <ol>
+
+
+<body>
+	<!--adding header section into the web page-->
+	<header>
+		<h1>Welcome to Self-Taught Developer Website</h1>
+
+		<p>
+			Here is a list with dates what I am learning and from where. This list
+			will be as a guide what was learned, from where and what details I have
+			learned
+		</p>
+
+		<!--here I am making quick links inside the html page to jump to desired section by using section ID. For that it is used nav tag that emphasize that inside we have navigation links-->
+		<nav>
+			<ul>
+				<li>
+					<a href="#HTML_Learning">Learning HTML</a>
+				</li>
+				<li>
+					<a href="#HTML_Do_Not_Know">What I do not Know About HTML</a>
+				</li>
+				<li>
+					<a href="#HTML_Learned">What I Have Learned</a>
+				</li>
+			</ul>
+		</nav>
+		<!--adding image as a logo for the website-->
+		<figure>
+			<img src="Images/STDIcon.png" alt="Self-Taught Developer icon" title="STD icon image" height="200"
+				width="200" loading="lazy">
+			<!--adding figcaption which is a text below the image to explain what this image is about-->
+			<figcaption>Self-Taught Developer Icon adding</figcaption>
+		</figure>
+	</header>
+	<!--adding main section into the web page-->
+	<main>
+		<!--hr or horizontal rule is a line that is used to divide the section on the page-->
+		<hr>
+		<section id="HTML_Learning">
+			<h2>Learning Content</h2>
+			<ul>
+				<li>I am learning HTML basics</li>
+				<li>
+					<ul>
+						<li>31.1.2024 Udemy Course Web Development - Only HTML part</li>
+						<li>
+							31.1.2024 Traversy Media Youtube HTML crash course - 1h long
+							<ul>
+								<!--If you want to make nested list you cannot use <ul> list under <ol>
                                     It will not work. But if you use <ul> under <ul> then you will have nested list-->
-									<li>
-										Here is my comment on the Traversy Media HTML Crash Course.
-										As it looks there are missing basic steps that I think it
-										would be very useful
-									</li>
-								</ul>
-							</li>
-							<li>
-								1.2.2024 Free Code Camp HTML course - 4h long
-								<ul>
-									<li>
-										<a href="./html-free-code-camp.html"
-											>Free Code Camp HTML Course Review</a
-										>
-									</li>
-									<li>
-										5.2.2024 - added website icon inside the head section with
-										link element
-									</li>
-									<li>
-										I have added Icon, but on the server I had an issue where
-										image was not visible for some reason.
-										<br />
-										First it was the path to the image was not correct. I had to
-										change that so it works on the server.
-										<br />
-										Then I have tested website on the link
-										<a href="https://validator.w3.org/">HTML Validator</a> which
-										gave me details are there any errors on my HTML document.
-										Which is great information to fix any errors in the HTML
-										document - VS Code do not give these errors so this tool
-										helped a lot.
-										<br />
-										Then I had an issue that I have put &lt;ol&gt; tag and
-										&lt;&gt; inside ol and ul tag which is not allowed. I need
-										to put them inside &lt;li&gt; tag
-									</li>
-								</ul>
-							</li>
-							<li>
-								7.2.2024 HTML entities
-								<ul>
-									<li>
-										There is "& nbsp ;" that I can use to add a space inside the
-										paragraph. You can find more entities
-										<a
-											href="https://developer.mozilla.org/en-US/docs/Glossary/Entity"
-											>here</a
-										>. Entities are additional tool you can see to insert inside
-										the paragraps, like white space, writing HTML tags to be
-										visible as a plain text. A helpful tool.
-									</li>
+								<li>
+									Here is my comment on the Traversy Media HTML Crash Course.
+									As it looks there are missing basic steps that I think it
+									would be very useful
+								</li>
+							</ul>
+						</li>
+						<li>
+							1.2.2024 Free Code Camp HTML course - 4h long
+							<ul>
+								<li>
+									<a href="./html-free-code-camp.html">Free Code Camp HTML Course Review</a>
+								</li>
+								<li>
+									5.2.2024 - added website icon inside the head section with
+									link element
+								</li>
+								<li>
+									I have added Icon, but on the server I had an issue where
+									image was not visible for some reason.
+									<br>
+									First it was the path to the image was not correct. I had to
+									change that so it works on the server.
+									<br>
+									Then I have tested website on the link
+									<a href="https://validator.w3.org/">HTML Validator</a> which
+									gave me details are there any errors on my HTML document.
+									Which is great information to fix any errors in the HTML
+									document - VS Code do not give these errors so this tool
+									helped a lot.
+									<br>
+									Then I had an issue that I have put &lt;ol&gt; tag and
+									&lt;&gt; inside ol and ul tag which is not allowed. I need
+									to put them inside &lt;li&gt; tag
+								</li>
+							</ul>
+						</li>
+						<li>
+							7.2.2024 HTML entities
+							<ul>
+								<li>
+									There is "& nbsp ;" that I can use to add a space inside the
+									paragraph. You can find more entities
+									<a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">here</a>.
+									Entities are additional tool you can see to insert inside
+									the paragraps, like white space, writing HTML tags to be
+									visible as a plain text. A helpful tool.
+								</li>
 
-									<li>
-										Then we have other elements that I can use and those are: -
-										&lt;abbr&gt; &lt;/abbr&gt; that gives me a way to add a text
-										that you will see as a description if you move your mouse
-										over that word. Just like the example here
-										<abbr title="Mozilla Developer Network">MDN</abbr> where MDN
-										has dots below and when you put your mouse over it, it will
-										show what it means. - &lt;address&gt; &lt;/address&gt; is
-										the second one tag element that I can use to have address in
-										Italic. Like example here:
+								<li>
+									Then we have other elements that I can use and those are: -
+									&lt;abbr&gt; &lt;/abbr&gt; that gives me a way to add a text
+									that you will see as a description if you move your mouse
+									over that word. Just like the example here
+									<abbr title="Mozilla Developer Network">MDN</abbr> where MDN
+									has dots below and when you put your mouse over it, it will
+									show what it means. - &lt;address&gt; &lt;/address&gt; is
+									the second one tag element that I can use to have address in
+									Italic. Like example here:
 
-										<address>Dubrovnik, Croatia</address>
-									</li>
-									<li>
-										List Types:
-										<ul>
-											<li>
-												Unordered list - here is the tag element "&lt;ul&gt;
-												&lt;/ul&gt;" and inside we add "&lt;li&gt; &lt;/li&gt;"
-												tag
-											</li>
-											<li>
-												Ordered list - here is the tag element"&lt;ol&gt;
-												&lt;/ol&gt;" and inside we add "&lt;li&gt; &lt;/li&gt;"
-												tag
-											</li>
-											<li>
-												Description list - here is the tag element "&lt;dl&gt;
-												&lt;/dl&gt;" and inside we add "&lt;dt&gt; &lt;/dt&gt;"
-												tag which is description term dl, and then "&lt;dd&gt;
-												&lt;/dd&gt;" which is description detail dd
-											</li>
-										</ul>
-									</li>
-									<li>
-										New tag element "&lt;strong&gt; &lt;/strong&gt;" that makes
-										word <strong>BOLD</strong> like this word.
-									</li>
-								</ul>
-							</li>
-							<li>
-								8.2.2024
-								<ul>
-									<li>
-										HTML semantic section &lt;semantic&gt; to easily jump
-										somewhere in the content with a link. Section tag element
-										should have id ="xx" where xx is the ID name that will be
-										used to jump to this section
-									</li>
-									<li>
-										using # as a direct link to get to the top of the page. I
-										have added at the bottom "Back to the top" that helps return
-										at the start of the page
-									</li>
-								</ul>
-							</li>
-							<li>
-								9.2.2024
-								<ul>
-									<li>
-										Create about page and add content to it. Add download link,
-										email address link, telephone number.
-									</li>
-									<li>
-										add back to home link in the footer section by using /
-										inside href element
-									</li>
-								</ul>
-							</li>
-							<li>
-								12.2.2024
-								<ul>
-									<li>
-										I have seen that on my GitHUB account I cannot see my
-										coomits. ANd the reason was that my email address inside VS
-										Code and Git was not the same as on GitHub account so Github
-										did not count these commits to my progress. I needed to add
-										new email address inside GitHub account so I have my history
-										commits. And I have added new email address to my Git inside
-										VS code that matches GitHub account so I have my commits
-										registered inside GitHub progress bar.
-									</li>
-									<li>
-										Today I have learned how to add images. Here is one example
-										with the issue I had.
-										<figure>
-											<img
-												src="/Images/Git%20new%20User%20commit.jpg"
-												alt="Git new user and user email added"
-												title="Git user and username added"
-												width="574"
-												height="262"
-												loading="lazy"
-											/>
-											<figcaption>
-												Added Git UserName and User Email Address
-											</figcaption>
-										</figure>
-									</li>
-								</ul>
-							</li>
-							<li>
-								13.2.2024
-								<ul>
-									<li>
-										I have learned that if you have an image that contains
-										space, like /Images/Git new User commit.jpg, you will get an
-										error because of the space between words. To solve this
-										issue you need to add %20 which replaces space in the name.
-										So we would have /Images/Git%20new%20User%20commit.jpg
-									</li>
-									<li>
-										adding header, main and footer section inside the code to
-										divide the web page into three parts.
-									</li>
-									<li>
-										adding aside-details-summary element that can be visible by
-										clicking on that part of the text to show details of summary
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</section>
-			<hr />
+									<address>Dubrovnik, Croatia</address>
+								</li>
+								<li>
+									List Types:
+									<ul>
+										<li>
+											Unordered list - here is the tag element "&lt;ul&gt;
+											&lt;/ul&gt;" and inside we add "&lt;li&gt; &lt;/li&gt;"
+											tag
+										</li>
+										<li>
+											Ordered list - here is the tag element"&lt;ol&gt;
+											&lt;/ol&gt;" and inside we add "&lt;li&gt; &lt;/li&gt;"
+											tag
+										</li>
+										<li>
+											Description list - here is the tag element "&lt;dl&gt;
+											&lt;/dl&gt;" and inside we add "&lt;dt&gt; &lt;/dt&gt;"
+											tag which is description term dl, and then "&lt;dd&gt;
+											&lt;/dd&gt;" which is description detail dd
+										</li>
+									</ul>
+								</li>
+								<li>
+									New tag element "&lt;strong&gt; &lt;/strong&gt;" that makes
+									word <strong>BOLD</strong> like this word.
+								</li>
+							</ul>
+						</li>
+						<li>
+							8.2.2024
+							<ul>
+								<li>
+									HTML semantic section &lt;semantic&gt; to easily jump
+									somewhere in the content with a link. Section tag element
+									should have id ="xx" where xx is the ID name that will be
+									used to jump to this section
+								</li>
+								<li>
+									using # as a direct link to get to the top of the page. I
+									have added at the bottom "Back to the top" that helps return
+									at the start of the page
+								</li>
+							</ul>
+						</li>
+						<li>
+							9.2.2024
+							<ul>
+								<li>
+									Create about page and add content to it. Add download link,
+									email address link, telephone number.
+								</li>
+								<li>
+									add back to home link in the footer section by using /
+									inside href element
+								</li>
+							</ul>
+						</li>
+						<li>
+							12.2.2024
+							<ul>
+								<li>
+									I have seen that on my GitHUB account I cannot see my
+									coomits. ANd the reason was that my email address inside VS
+									Code and Git was not the same as on GitHub account so Github
+									did not count these commits to my progress. I needed to add
+									new email address inside GitHub account so I have my history
+									commits. And I have added new email address to my Git inside
+									VS code that matches GitHub account so I have my commits
+									registered inside GitHub progress bar.
+								</li>
+								<li>
+									Today I have learned how to add images. Here is one example
+									with the issue I had.
+									<figure>
+										<img src="/Images/Git%20new%20User%20commit.jpg"
+											alt="Git new user and user email added" title="Git user and username added"
+											width="574" height="262" loading="lazy">
+										<figcaption>
+											Added Git UserName and User Email Address
+										</figcaption>
+									</figure>
+								</li>
+							</ul>
+						</li>
+						<li>
+							13.2.2024
+							<ul>
+								<li>
+									I have learned that if you have an image that contains
+									space, like /Images/Git new User commit.jpg, you will get an
+									error because of the space between words. To solve this
+									issue you need to add %20 which replaces space in the name.
+									So we would have /Images/Git%20new%20User%20commit.jpg
+								</li>
+								<li>
+									adding header, main and footer section inside the code to
+									divide the web page into three parts.
+								</li>
+								<li>
+									adding aside-details-summary element that can be visible by
+									clicking on that part of the text to show details of summary
+								</li>
+							</ul>
+						</li>
+						<li>
+							14.2.2024
+							<ul>
+								<li>
+									I have added a table with rows, columns and headers. I had an issue with prettier
+									extension because when I have saved it did not indent properly. So i have enabled
+									prettier in the settings of formatting . Then also select indent with tab inside
+									prettier settings.
+									I had an issue that prettier started to add slash on tag elements like img, meta.
+									Which validator did not see as a good practice. So I needed to modify
+									settings.json(to find this go to file->preferences->settings and in the search type
+									settings.json). change the row by following this <a
+										href="https://stackoverflow.com/questions/50261161/how-do-i-stop-prettier-from-formatting-html-files/66646608#66646608">instructions.
+										After this the prettier will not add slash at the end of the tag element
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</section>
+		<hr>
 
-			<section id="HTML_Do_Not_Know">
-				<h2>What I do Not Know or Understand</h2>
-				<p>
-					As I have started I do not understand certain parts inside the HTML
-					code:
-				</p>
-				<ul>
-					<li>Why we use !DOCTYPE at the start. What does it represents</li>
-					<li>Why is html in the first paragraph together with the !DOCTYPE</li>
-					<li>why do we have meta charset, meta name, meta content</li>
-					<li>
-						Details that are added inside the link element like the "rel",
-						"type" wher I have added icon for a website. Now you can see website
-						icon in the browser - "LTD" icon
-					</li>
-					<li>What means Render or Parsed</li>
-					<li>
-						how to create category page and add new pages inside that category
-						so I can categorize pages on the live website
-					</li>
-					<li>
-						when to use &lt;p&gt; tag and when not to use. Because I see when
-						you a href tag sometimes it is not used and sometimes it is
-					</li>
-					<li>
-						12.2.2024 - is it possible to put image caption into center position
-					</li>
-				</ul>
-			</section>
-			<hr />
-			<section id="HTML_Learned">
-				<h2>What I Have Learned Up to Now</h2>
-				<p>
-					I see it would be good to write here what I have learned up to now to
-					track the progress.
-				</p>
-				<ol>
-					<li>
-						5.2.2024 - how to add the icon for the website. It is added inside
-						the head section, with link element. I had to upload the image icon
-						inside the working folder so I can use in on the website.
-					</li>
-					<li>
-						7.2.2024 - How to use some of the new tag elements like strong,
-						description list, abbreviation tag
-					</li>
-					<li>
-						8.2.2024 - how to use section tag element and how to use # to get to
-						specific part of the page
-					</li>
-					<li>
-						9.2.2024 - when to use &lt;p&gt; element - use it whenever you want
-						to have space between text paragraphs. It will be nicely structured.
-						Instead using &lt;br&gt; tag element and make a row as a space
-						between the text it is best to use paragraph element
-					</li>
-					<li>
-						12.2.2024 - added image with details like alt, size, caption, title,
-						loading like lazy load
-					</li>
-					<li>
-						13.2.2024 - added sections inside the web page, header, main,
-						footer. Added element aside-details-summary
-					</li>
-				</ol>
-			</section>
-			<section>
-				<h3>When I am Learning</h3>
-				Here are few details about my daily schedule:
-				<aside>
-					<details>
-						<summary>What do you think when is the start time?</summary>
-						<p>
-							I start at <time datetime="04:00">04:00am</time> and learn for
-							about 2 hours.
-						</p>
-					</details>
-				</aside>
-			</section>
-			<section>
-				<table>
-					<caption>
-						<!--adding caption for the table to define what is table about-->
-						Daily Schedule Monday-Friday
-					</caption>
-					<thead>
-						<!--formating properly table to have head, body and footer-->
-						<tr>
-							<!--scope is for reading devices that helps to define what is th. Scope = col represents a column-->
-							<th scope="col">&nbsp;</th>
-							<!--adding free column at the start-->
-							<th scope="col">Time</th>
-							<th scope="col">Activity</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!--formating properly table to have head, body and footer-->
-						<tr>
-							<th scope="row">Morning</th>
-							<td>
-								<!--datetime is used for the reading devices to read what is the data inside the table-->
-								<time datetime="04:00">04:00</time> -
-								<time datetime="06:00">06:00</time>
-							</td>
-							<td>Learning how to code</td>
-						</tr>
-						<tr>
-							<th scope="row">Day</th>
-							<td>
-								<time datetime="06:00">06:00</time> -
-								<time datetime="06:00">16:00</time>
-							</td>
-							<td>Day job</td>
-						</tr>
-						<tr>
-							<th scope="row">Afternoon</th>
-							<td>
-								<time datetime="16:00">16:00</time> -
-								<time datetime="21:00">21:00</time>
-							</td>
-							<td>Spent time with a family</td>
-						</tr>
-						<tr>
-							<th scope="row">Evening</th>
-							<td rowspan="2">Other times</td>
-							<td>Free time</td>
-						</tr>
-						<tr>
-							<!--th is for the row header-->
-							<th scope="row">Night</th>
-							<td>Sleep</td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<!--formating properly table to have head, body and footer-->
-						<tr>
-							<!--adding colspan to take 3 columns-->
-							<td colspan="3">This is how my daily routine looks like</td>
-						</tr>
-					</tfoot>
-				</table>
-			</section>
-		</main>
-		<!--adding footer section into the web page-->
-		<footer>
+		<section id="HTML_Do_Not_Know">
+			<h2>What I do Not Know or Understand</h2>
 			<p>
-				<a href="#">Back to the top</a>
+				As I have started I do not understand certain parts inside the HTML
+				code:
 			</p>
-			<hr />
+			<ul>
+				<li>Why we use !DOCTYPE at the start. What does it represents</li>
+				<li>Why is html in the first paragraph together with the !DOCTYPE</li>
+				<li>why do we have meta charset, meta name, meta content</li>
+				<li>
+					Details that are added inside the link element like the "rel",
+					"type" wher I have added icon for a website. Now you can see website
+					icon in the browser - "LTD" icon
+				</li>
+				<li>What means Render or Parsed</li>
+				<li>
+					how to create category page and add new pages inside that category
+					so I can categorize pages on the live website
+				</li>
+				<li>
+					when to use &lt;p&gt; tag and when not to use. Because I see when
+					you a href tag sometimes it is not used and sometimes it is
+				</li>
+				<li>
+					12.2.2024 - is it possible to put image caption into center position
+				</li>
+			</ul>
+		</section>
+		<hr>
+		<section id="HTML_Learned">
+			<h2>What I Have Learned Up to Now</h2>
 			<p>
-				&lt;&lt;&lt; &copy; <a href="/About.html">Frano Grgić</a> &gt;&gt;&gt;
+				I see it would be good to write here what I have learned up to now to
+				track the progress.
 			</p>
-			<p>Back to <a href="/">Home</a></p>
-		</footer>
-	</body>
+			<ol>
+				<li>
+					5.2.2024 - how to add the icon for the website. It is added inside
+					the head section, with link element. I had to upload the image icon
+					inside the working folder so I can use in on the website.
+				</li>
+				<li>
+					7.2.2024 - How to use some of the new tag elements like strong,
+					description list, abbreviation tag
+				</li>
+				<li>
+					8.2.2024 - how to use section tag element and how to use # to get to
+					specific part of the page
+				</li>
+				<li>
+					9.2.2024 - when to use &lt;p&gt; element - use it whenever you want
+					to have space between text paragraphs. It will be nicely structured.
+					Instead using &lt;br&gt; tag element and make a row as a space
+					between the text it is best to use paragraph element
+				</li>
+				<li>
+					12.2.2024 - added image with details like alt, size, caption, title,
+					loading like lazy load
+				</li>
+				<li>
+					13.2.2024 - added sections inside the web page, header, main,
+					footer. Added element aside-details-summary
+				</li>
+				<li>
+					14.2.2024 - added table
+				</li>
+			</ol>
+		</section>
+		<section>
+			<h3>When I am Learning</h3>
+			Here are few details about my daily schedule:
+			<aside>
+				<details>
+					<summary>What do you think when is the start time?</summary>
+					<p>
+						I start at <time datetime="04:00">04:00am</time> and learn for
+						about 2 hours.
+					</p>
+				</details>
+			</aside>
+		</section>
+		<table>
+			<caption>
+				<!--adding caption for the table to define what is table about-->
+				Daily Schedule Monday-Friday
+			</caption>
+			<thead>
+				<!--formating properly table to have head, body and footer-->
+				<tr>
+					<!--scope is for reading devices that helps to define what is th. Scope = col represents a column-->
+					<th scope="col">&nbsp;</th>
+					<!--adding free column at the start-->
+					<th scope="col">Time</th>
+					<th scope="col">Activity</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!--formating properly table to have head, body and footer-->
+				<tr>
+					<th scope="row">Morning</th>
+					<td>
+						<!--datetime is used for the reading devices to read what is the data inside the table-->
+						<time datetime="04:00">04:00</time> -
+						<time datetime="06:00">06:00</time>
+					</td>
+					<td>Learning how to code</td>
+				</tr>
+				<tr>
+					<th scope="row">Day</th>
+					<td>
+						<time datetime="06:00">06:00</time> -
+						<time datetime="06:00">16:00</time>
+					</td>
+					<td>Day job</td>
+				</tr>
+				<tr>
+					<th scope="row">Afternoon</th>
+					<td>
+						<time datetime="16:00">16:00</time> -
+						<time datetime="21:00">21:00</time>
+					</td>
+					<td>Spent time with a family</td>
+				</tr>
+				<tr>
+					<th scope="row">Evening</th>
+					<td rowspan="2">Other times</td>
+					<td>Free time</td>
+				</tr>
+				<tr>
+					<!--th is for the row header-->
+					<th scope="row">Night</th>
+					<td>Sleep</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<!--formating properly table to have head, body and footer-->
+				<tr>
+					<!--adding colspan to take 3 columns-->
+					<td colspan="3">This is how my daily routine looks like</td>
+				</tr>
+			</tfoot>
+		</table>
+
+	</main>
+	<!--adding footer section into the web page-->
+	<footer>
+		<p>
+			<a href="#">Back to the top</a>
+		</p>
+		<hr>
+		<p>
+			&lt;&lt;&lt; &copy; <a href="/About.html">Frano Grgić</a> &gt;&gt;&gt;
+		</p>
+		<p>Back to <a href="/">Home</a></p>
+	</footer>
+</body>
+
 </html>
