@@ -415,46 +415,63 @@
 		<article>
 			<h2>Contact me</h2>
 			<form>
-				<p>
-					<label for="firstName">First Name:</label>
-					<input type="text" name="firstName" id="first Name" placeholder="Enter you name" autocomplete="on"
-						required="true">
-				</p>
-				<p>
-					<label for="lastName">Last Name:</label>
-					<input type="text" name="lastName" id="lastName" placeholder="Enter your last name"
-						autocomplete="on" required="true">
-				</p>
-				<p>
-					<label for="password">Password:</label>
-					<input type="password" name="password" id="password" required="true"
-						placeholder="Enter your password">
-				</p>
-				<p>
-					<label for="phone">Phone Number:</label>
-					<input type="tel" name="phone" id="phone" placeholder="Enter your phone number" required="true">
-				</p>
-				<p>
-					<label for="decade">Decade:</label>
-					<input type="number" name="decade" id="decade" placeholder="select decade" min="1980" max="2024"
-						value="2000" step="10">
-				</p>
-				<p>
-					<label for="box">Box type</label>
-					<select name="box" id="box" multiple="true" size="6">
-						<optgroup label="Plastic Box">
-							<option value="small">Small size box</option>
-							<option value="middle">Middle size box</option>
-							<option value="large" selected>Large size box</option>
-						</optgroup>
-						<optgroup label="Wood box">
-							<option value="small">Small size box</option>
-							<option value="middle">Middle size box</option>
-							<option value="large">Large size box</option>
-						</optgroup>
-						<option value="other">Other</option>
-					</select>
-				</p>
+				<fieldset>
+					<legend>Contact information</legend>
+					<p>
+						<label for="firstName">First Name:</label>
+						<input type="text" name="firstName" id="first Name" placeholder="Enter you name"
+							autocomplete="on" required="true">
+					</p>
+					<p>
+						<label for="lastName">Last Name:</label>
+						<input type="text" name="lastName" id="lastName" placeholder="Enter your last name"
+							autocomplete="on" required="true">
+					</p>
+					<p>
+						<label for="password">Password:</label>
+						<input type="password" name="password" id="password" required="true"
+							placeholder="Enter your password">
+					</p>
+					<p>
+						<label for="phone">Phone Number:</label>
+						<input type="tel" name="phone" id="phone" placeholder="Enter your phone number" required="true">
+					</p>
+					<p>
+						<label for="decade">Decade:</label>
+						<input type="number" name="decade" id="decade" placeholder="select decade" min="1980" max="2024"
+							value="2000" step="10">
+					</p>
+					<p>
+						<label for="box">Box type</label>
+						<select name="box" id="box" multiple="true" size="6">
+							<optgroup label="Plastic Box">
+								<option value="small">Small size box</option>
+								<option value="middle">Middle size box</option>
+								<option value="large" selected>Large size box</option>
+							</optgroup>
+							<optgroup label="Wood box">
+								<option value="small">Small size box</option>
+								<option value="middle">Middle size box</option>
+								<option value="large">Large size box</option>
+							</optgroup>
+							<option value="other">Other</option>
+						</select>
+					</p>
+				</fieldset>
+			</form>
+			<form>
+				<fieldset>
+					<legend>Additional info</legend>
+					<label for="soda">Soda type</label>
+					<input type="text" name="soda" id="soda" placeholder="select soda type" list="soda list">
+					<datalist id="soda list">
+						<option value="Coca Cola">
+						<option value="Sprite">
+						<option value="Fanta">
+						<option value="Orange">
+						<option value="Apple">
+					</datalist>
+				</fieldset>
 			</form>
 		</article>
 
