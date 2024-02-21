@@ -70,23 +70,20 @@ header{
 /* -------------- section 2-----------------*/
 /* details for class .image inside class .section_2 */
 .section_2 .image{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
     width: 200px;
     height: 200px;
     float:left ;/*put the image on the left side and text on the right next to image*/
     margin-right: 10px;
 }
-.section_2{
+/* .section_2{
     align-items: center;
     text-align: center;
-
-}
+} */
 .section_2_div{
     display:flow-root; /*use this to have only one text next to image. What is contained inside the DIV */
-    padding: 10px;
-
+    padding-left: 30%;
+    padding-right: 30%;
+    text-align: center;
 }
 .p_center{
     text-align: center;
