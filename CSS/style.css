@@ -1,32 +1,91 @@
 
-p{
-    font-size: 16px;
-    color:red;
-    
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
 }
 
-.header .container{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-    border-style: dashed;
-}
-.container{
-    margin: 0 auto;
-    max-width: 1000px;
-    position: relative;
-    text-align: center;
-    width: 100%;
-}
-header {
-    display: block;
-}
 body{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
+    color: #262421;
+}
+/* all paragraphs should have padding */
+p{
+    padding: 5px;
+}
+/* all list items should have padding */
+li{
+    padding: 5px;
 }
 
-.tnav-links{
-    display:flex;
+h2{
+    text-align: center;
+    padding: 10px;
+}
+
+header{
+    background-color: #f4f5fa;
+    padding:10px;
+}
+
+.header_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+ 
+}
+.header_container a{
+    text-decoration: none;
+    color: grey;
+    padding-right: 10px;
+}
+
+.heading1{
+    border-style: dashed;
+    display: block;
+}
+
+ .section_0{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgb(186, 192, 177);
+
+    border-top-style:solid;
+    border-top-width: 1px ;
+    border-top-color: grey;
+} 
+/*set span color*/
+.span{
+    color:green;
+}
+
+.section_1{
+    padding: 100px;
+    background-color: #f4f0ea;
+    text-align: center;
+}
+
+/* details for class .image inside class .section_2 */
+.section_2 .image{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    height: 200px;
+    float:left ;/*put the image on the left side and text on the right next to image*/
+    margin-right: 10px;
+}
+.section_2_div{
+    display:flow-root; /*use this to have only one text next to image. What is contained inside the DIV */
+}
+.p_center{
+    text-align: center;
+    padding: 30px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+footer{
+    text-align: center;
 }
