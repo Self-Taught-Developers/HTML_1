@@ -33,7 +33,6 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;  
- 
 }
 .header_container a{
     text-decoration: none;
@@ -45,11 +44,13 @@ header{
     border-style: dashed;
     display: block;
 }
-
+/* -------------- section 0-----------------*/
  .section_0{
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    padding-left: 20%;
+    padding-right: 20%;
     background-color: rgb(186, 192, 177);
 
     border-top-style:solid;
@@ -60,13 +61,13 @@ header{
 .span{
     color:green;
 }
-
+/* -------------- section 1-----------------*/
 .section_1{
     padding: 100px;
     background-color: #f4f0ea;
     text-align: center;
 }
-
+/* -------------- section 2-----------------*/
 /* details for class .image inside class .section_2 */
 .section_2 .image{
     display: block;
@@ -77,8 +78,15 @@ header{
     float:left ;/*put the image on the left side and text on the right next to image*/
     margin-right: 10px;
 }
+.section_2{
+    align-items: center;
+    text-align: center;
+
+}
 .section_2_div{
     display:flow-root; /*use this to have only one text next to image. What is contained inside the DIV */
+    padding: 10px;
+
 }
 .p_center{
     text-align: center;
@@ -86,6 +94,7 @@ header{
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+/* -------------- FOOTER -----------------*/
 footer{
     text-align: center;
 }
