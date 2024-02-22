@@ -3,6 +3,7 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    line-height: 1.5rem;
 }
 
 body{
@@ -22,6 +23,7 @@ li{
 h2{
     text-align: center;
     padding: 10px;
+    color: #3d608d;
 }
 
 header{
@@ -70,8 +72,8 @@ header{
 /* -------------- section 2-----------------*/
 /* details for class .image inside class .section_2 */
 .section_2 .image{
-    width: 200px;
-    height: 200px;
+    width: 410px;
+    height: 208px;
     float:left ;/*put the image on the left side and text on the right next to image*/
     margin-right: 10px;
 }
@@ -81,8 +83,8 @@ header{
 } */
 .section_2_div{
     display:flow-root; /*use this to have only one text next to image. What is contained inside the DIV */
-    padding-left: 30%;
-    padding-right: 30%;
+    padding-left: 20%;
+    padding-right: 20%;
     text-align: center;
 }
 .p_center{
@@ -90,16 +92,35 @@ header{
     padding: 30px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+/* -------------- section 3-----------------*/
+.section_3{
+    padding-left: 20%;
+    padding-right: 20%;
+}
 /* -------------- section 4-----------------*/
-.image{
+.section_4{
+    padding-left: 20%;
+    padding-right: 20%;
+}
+.div_list{
     display: block;
-    width: 50%;
-    margin: auto;
+    justify-content: center;
+    background-color: #f5f4f2;
+    margin: 10px;
+}
+
+ul{
+    padding-left: 40px;
+    list-style-image: url("/Images/checkbox_5px.png");
 }
 /* -------------- section 5-----------------*/
 .image_5{
     display: flex;
     justify-content: center;
+}
+.section_5{
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
 /* -------------- FOOTER -----------------*/
