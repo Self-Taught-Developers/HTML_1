@@ -90,6 +90,17 @@ header{
     padding: 30px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+/* -------------- section 4-----------------*/
+.image{
+    display: block;
+    width: 50%;
+    margin: auto;
+}
+/* -------------- section 5-----------------*/
+.image_5{
+    display: flex;
+    justify-content: center;
+}
 
 /* -------------- FOOTER -----------------*/
 footer{
