@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Express App</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 20px;
+      padding-left: 20px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+
+    #noAuth {
+      background-color: #3498db;
+    }
+
+    #basicAuth {
+      background-color: #2ecc71;
+    }
+
+    #apiKey {
+      background-color: #f1c40f;
+    }
+
+    #bearerToken {
+      background-color: #e74c3c;
+    }
+
+    .response-area {
+      display: inline-block;
+      justify-content: center;
+      margin-top: 50px;
+      margin-left: 50px;
+      background-color: white;
+      padding: 50px;
+    }
+
+    .inner {
+      background-color: #fff;
+      /* White background for contrast */
+      border: 1px solid #ccc;
+      /* Light grey border */
+      padding: 20px;
+      margin-top: 10px;
+      overflow-x: auto;
+      /* Adds a horizontal scrollbar if content overflows */
+      font-family: 'Courier New', Courier, monospace;
+      /* Monospaced font for better readability */
+      white-space: pre-wrap;
+      /* Ensures formatting is preserved if JSON is pretty-printed */
+      word-wrap: break-word;
+      /* Ensures long strings do not overflow their container */
+    }
+  </style>
+</head>
+
+<body>
+  <button type="submit" id="noAuth" onclick="window.location.href='/noAuth'">No Auth</button>
+
+
+  <div class="response-area">
+    <div class="inner">
+      <%=content%>
+        <%=content1%>
+    </div>
+  </div>
+</body>
+
+</html>
