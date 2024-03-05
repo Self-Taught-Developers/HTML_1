@@ -32,12 +32,13 @@ app.get("/Refresh", async (req, res) => {
     await db.connect();
     console.log("Connected to the database.");
 
+    //get raw data from the API endpoint
     const result = await axios.get(API_URL + yourAPIKey);
 
-    //read the time stamp variable from the JSON data file
-    const timeStamp = result.data.timestamp;
-    const dateFromTimestamp = new Date(timeStamp * 1000);
-    console.log("Timestamp is: ", dateFromTimestamp);
+    const dates = result.data.timestamp;
+    const newDate = await dateConversion(dates);
+    console.log("formattedDate returned:", newDate);
+    
 
     //save data from the JSON file into object variable
     const ratesEntries = Object.entries(result.data.rates);
@@ -46,21 +47,14 @@ app.get("/Refresh", async (req, res) => {
     const fifteenthEntry = ratesEntries[1];
     const fifteenthRate = fifteenthEntry[1];
 
-    // Get the year, month (adjusted for zero-index), and day
-    const year = dateFromTimestamp.getFullYear();
-    const month = dateFromTimestamp.getMonth() + 1; // Add 1 because months are 0-indexed
-    const day = dateFromTimestamp.getDate();
 
-    // Construct the date string in the desired format
-    const formattedDate = `${year}-${month}-${day}`;
-    console.log("formattedDate:", formattedDate);
 
 
     // Call the asynchronous function and get the fetched data from the Database
-    const quizData = await fetchQuizData(db, ratesEntries, formattedDate);
+    const quizData = await fetchQuizData(db, ratesEntries);
 
     // Log the content and structure of quizData which represents the data read from the Database
-    console.log("Quiz Data:", quizData);
+    //console.log("Quiz Data:", quizData);
 
     // Ensure that quizData is an array before trying to access its elements
     if (Array.isArray(quizData) && quizData.length >= 1) {
@@ -72,7 +66,7 @@ app.get("/Refresh", async (req, res) => {
 
       // If you want to display both the currency code and the rate, you can construct a string or object
       const content = `Currency: ${fifteenthEntry[0]}, Rate: ${fifteenthRate}`;
-      const content1 = `Currency: ${currency}, Rate: ${rate}, Date: ${formattedDate}`;
+      const content1 = `Currency: ${currency}, Rate: ${rate}, Date: ${dates}`;
 
       res.render("index.ejs", {
         content: JSON.stringify(content),
@@ -91,31 +85,67 @@ app.get("/Refresh", async (req, res) => {
 });
 
 //------------------------ FUNCTION ---------------------------------//
-const fetchQuizData = async (db,ratesEntries, formattedDate) => {
+const fetchQuizData = async (db,ratesEntries) => {
     try {
-      console.log("Fetching quiz data...");
-      console.log("rateEntries[0] = ", ratesEntries[0]);
-      console.log("Timestamp = ", formattedDate);
+      console.log("Fetching data...");
 
-      //console.log(formattedDate);
+      // First check what is inside the table
+      const result = await db.query("SELECT * FROM symbol");
+      console.log("result length is:", result.rows.length);
 
+      let newDate; // Move the declaration outside the loop
+
+      for(let j=0; j<result.rows.length; j++)
+      {
+        console.log(`result.rows.date[${j}]:`, result.rows[j].date);
+
+        newDate = await dateConversion(result.rows[j].date);
+        console.log(`result.rows.date[${j}]:`, newDate);
+      }
+
+      console.log("entering database:");
       // Insert data into the 'symbol' table using parameterized query with all data from the JSON
       //for(let i=0; i<ratesEntries.length; i++)
       for(let i=0; i<1; i++)// testing with only 1 record
       {
-        await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", ["USD/" + ratesEntries[i][0], ratesEntries[i][1], formattedDate]);
+        await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", ["USD/" + ratesEntries[i][0], ratesEntries[i][1], newDate]);
       };
-      
-  
-      // Fetch data from the 'symbol' table
-      const result = await db.query("SELECT * FROM symbol");
       return result.rows;
-    } catch (error) {
+    } 
+      // Fetch data from the 'symbol' table
+      //const result = await db.query("SELECT * FROM symbol");
+      
+    catch (error) {
       console.error("Error fetching or inserting quiz data:", error.stack);
       throw error;
-    }
-  };
-  
+    };
+  }
+  //------------------------ FUNCTION ---------------------------------//
+  const dateConversion = async(dates) => {
+    try{
+      console.log("Timestamp RAW is: ", dates);
+      //read the time stamp variable from the JSON data file
+      const timeStamp = dates;
+      console.log("timeStamp is: ", timeStamp);
+      const dateFromTimestamp = new Date(timeStamp);
+      console.log("dateFromTimestamp is: ", dateFromTimestamp);
+
+      // Get the year, month (adjusted for zero-index), and day
+      const year = dateFromTimestamp.getFullYear();
+      const month = dateFromTimestamp.getMonth() + 1; // Add 1 because months are started indexed from 0
+      const day = dateFromTimestamp.getDate();
+
+      // Construct the date string in the desired format
+      const formattedDate = `${year}-${month}-${day}`;
+      console.log("formattedDate:", formattedDate);
+      return formattedDate;
+    }catch (error) 
+    {
+      console.error("Error converting date:", error.stack);
+      throw error;
+    };
+  }
+    
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
