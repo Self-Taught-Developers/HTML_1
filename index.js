@@ -34,21 +34,32 @@ app.get("/Refresh", async (req, res) => {
 
     const result = await axios.get(API_URL + yourAPIKey);
 
+    //read the time stamp variable from the JSON data file
     const timeStamp = result.data.timestamp;
     const dateFromTimestamp = new Date(timeStamp * 1000);
-    console.log(dateFromTimestamp);
+    console.log("Timestamp is: ", dateFromTimestamp);
 
+    //save data from the JSON file into object variable
     const ratesEntries = Object.entries(result.data.rates);
+
+    //read the data from the second(first is 0, second is 1) record
     const fifteenthEntry = ratesEntries[1];
     const fifteenthRate = fifteenthEntry[1];
 
+    // Get the year, month (adjusted for zero-index), and day
+    const year = dateFromTimestamp.getFullYear();
+    const month = dateFromTimestamp.getMonth() + 1; // Add 1 because months are 0-indexed
+    const day = dateFromTimestamp.getDate();
+
+    // Construct the date string in the desired format
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log("formattedDate:", formattedDate);
 
 
-    const dateTime = new Date();
+    // Call the asynchronous function and get the fetched data from the Database
+    const quizData = await fetchQuizData(db, ratesEntries, formattedDate);
 
-    // Call the asynchronous function and get the fetched data
-    const quizData = await fetchQuizData(db, fifteenthEntry, fifteenthRate, dateTime, ratesEntries, dateFromTimestamp);
-    // Log the content and structure of quizData
+    // Log the content and structure of quizData which represents the data read from the Database
     console.log("Quiz Data:", quizData);
 
     // Ensure that quizData is an array before trying to access its elements
@@ -56,13 +67,8 @@ app.get("/Refresh", async (req, res) => {
       const currency = quizData[1].symbol.trim(); // Trim to remove any leading/trailing spaces
       const rate = parseFloat(quizData[1].rate); // Convert rate to a number
       const dateTime = quizData[1].date;
-      // Get the year, month (adjusted for zero-index), and day
-      const year = dateTime.getFullYear();
-      const month = dateTime.getMonth() + 1; // Add 1 because months are 0-indexed
-      const day = dateTime.getDate();
 
-      // Construct the date string in the desired format
-      const formattedDate = `${year}-${month}-${day}`;
+      console.log("Date from the Database:", quizData[1].date);
 
       // If you want to display both the currency code and the rate, you can construct a string or object
       const content = `Currency: ${fifteenthEntry[0]}, Rate: ${fifteenthRate}`;
@@ -84,20 +90,22 @@ app.get("/Refresh", async (req, res) => {
   }
 });
 
-const fetchQuizData = async (db, fifteenthEntry, fifteenthRate, dateTime, ratesEntries, dateFromTimestamp) => {
+//------------------------ FUNCTION ---------------------------------//
+const fetchQuizData = async (db,ratesEntries, formattedDate) => {
     try {
       console.log("Fetching quiz data...");
       console.log("rateEntries[0] = ", ratesEntries[0]);
+      console.log("Timestamp = ", formattedDate);
 
-      //console.log(dateFromTimestamp);
+      //console.log(formattedDate);
 
       // Insert data into the 'symbol' table using parameterized query with all data from the JSON
       //for(let i=0; i<ratesEntries.length; i++)
-      for(let i=0; i<2; i++)
+      for(let i=0; i<1; i++)// testing with only 1 record
       {
-        await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", ["USD/" + ratesEntries[i][0], ratesEntries[i][1], dateTime]);
-      }
-      //await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", ["USD/" + fifteenthEntry[0], fifteenthRate, dateTime]);
+        await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", ["USD/" + ratesEntries[i][0], ratesEntries[i][1], formattedDate]);
+      };
+      
   
       // Fetch data from the 'symbol' table
       const result = await db.query("SELECT * FROM symbol");
