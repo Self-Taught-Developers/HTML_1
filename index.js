@@ -39,16 +39,13 @@ app.get("/Refresh", async (req, res) => {
     const dateTimestamp = await dateConversionTimestamp(dates);
     console.log("formattedDate returned:", dateTimestamp);
     
-    console.log("data from the JSON returned:", result.data.rates);
+    //console.log("data from the JSON returned:", result.data.rates);
     //save data from the JSON file into object variable
     const ratesEntries = Object.entries(result.data.rates);
 
     //read the data from the second(first is 0, second is 1) record
     const fifteenthEntry = ratesEntries[1];
     const fifteenthRate = fifteenthEntry[1];
-
-
-
 
     // Call the asynchronous function and get the fetched data from the Database
     const quizData = await fetchQuizData(db, ratesEntries, dateTimestamp);
@@ -89,23 +86,32 @@ const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
     try {
       console.log("Fetching data...");
 
+
+
+      let dateToday = new Date();//what is current date
+      console.log("Today is non converted:", dateToday);
+      //dateToday = await dateConversion(dateToday);//current date
+      //console.log("Today is converted:", dateToday);
+
+      const daysAgo = 50;
+      //dateDaysAgo = await daysAgoConversion(daysAgo, dateToday);//get me the date which was xx days ago
+      const date50days = new Date(dateToday);
+      date50days.setDate(dateToday.getDate()-daysAgo);
+      console.log("50 days back is: ", date50days);
+
       // First check what is inside the table
-      const result = await db.query("SELECT * FROM symbol");
+      //const result = await db.query("SELECT * FROM symbol");
+      const result = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", ['EUR/USD', date50days.toISOString()]);
       //check is there anything inside the database
       console.log("result length is:", result.rows.length);
+      console.log("result 50 days ago is:", result.rows[0].rate);
 
-      let symbolA = "EUR/USD";
-      let dateToday = new Date();
-      dateToday = await dateConversion(dateToday);//current date
-      console.log("Today is:", dateToday);
-      const daysAgo = 50;
-      dateDaysAgo = await daysAgoConversion(daysAgo, dateToday);//get me the date which was xx days ago
 
       let newDate; // Move the declaration outside the loop
 
       for(let j=0; j<result.rows.length; j++)
       {
-        //console.log(`result.rows.date[${j}]:`, result.rows[j].date);
+        console.log(`result.rows.date[${j}]:`, result.rows[j].date);
         //check the date in each of the records inside the database 
         newDate = await dateConversionTimestamp(result.rows[j].date);
         //console.log(`result.rows.date[${j}]:`, newDate);
@@ -134,9 +140,10 @@ const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
     try{
       console.log("Timestamp RAW is: ", dates);
 
-      const dateFromTimestamp = new Date(dates *1000);
-      console.log("dateFromTimestamp is: ", dateFromTimestamp);
+      const dateFromTimestamp = new Date(dates *1000);//multiply to get in seconds because current time is in the miliseconds
 
+      console.log("dateFromTimestamp is: ", dateFromTimestamp);
+/*
       // Get the year, month (adjusted for zero-index), and day
       const year = dateFromTimestamp.getFullYear();
       const month = dateFromTimestamp.getMonth() + 1; // Add 1 because months are started indexed from 0
@@ -146,6 +153,8 @@ const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
       const formattedDate = `${year}-${month}-${day}`;
       console.log("formattedDate:", formattedDate);
       return formattedDate;
+      */
+     return dateFromTimestamp;
     }catch (error) 
     {
       console.error("Error converting date:", error.stack);
@@ -175,7 +184,7 @@ const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
         //------------------------ FUNCTION ---------------------------------//
         const daysAgoConversion = async(daysAgo, dateToday) => {
           try{
-            const currentDateMiliSeconds = new Date()
+            const currentDateMiliSeconds = new Date();
             
             
             console.log("currentDateMiliSeconds:", currentDateMiliSeconds);
