@@ -34,12 +34,9 @@ app.get("/Refresh", async (req, res) => {
 
     //get raw data from the API endpoint
     const result = await axios.get(API_URL + yourAPIKey);
-
-    const dates = result.data.timestamp;
-    const dateTimestamp = await dateConversionTimestamp(dates);
+    const apiDate = result.data.timestamp;
+    const dateTimestamp = await dateConversionTimestamp(apiDate);
     console.log("formattedDate returned:", dateTimestamp);
-    
-    //console.log("data from the JSON returned:", result.data.rates);
     //save data from the JSON file into object variable
     const ratesEntries = Object.entries(result.data.rates);
 
@@ -47,12 +44,16 @@ app.get("/Refresh", async (req, res) => {
     const fifteenthEntry = ratesEntries[1];
     const fifteenthRate = fifteenthEntry[1];
 
+
+    // call the aysnchronous function and save received data into the database
+    await saveAPIDataIntoDatabase (db, ratesEntries, dateTimestamp);
+    console.log("Done saving API data into database. Moving forward");
+
+    await readDatabaseAndFilter(db);
+
+
     // Call the asynchronous function and get the fetched data from the Database
     const quizData = await fetchQuizData(db, ratesEntries, dateTimestamp);
-
-    // Log the content and structure of quizData which represents the data read from the Database
-    //console.log("Quiz Data:", quizData);
-
     // Ensure that quizData is an array before trying to access its elements
     if (Array.isArray(quizData) && quizData.length >= 1) {
       const currency = quizData[1].symbol.trim(); // Trim to remove any leading/trailing spaces
@@ -82,37 +83,89 @@ app.get("/Refresh", async (req, res) => {
 });
 
 //------------------------ FUNCTION ---------------------------------//
+//read data from the database and filter symbols
+const readDatabaseAndFilter = async (db) =>{
+  console.log("Entering into database for reading and filtering symbols");
+  try{
+    const symbol = ["USD/EUR", "USD/GBP", "USD/CAD", "USD/CHF", "USD/JPY", "USD/AUD", "USD/NZD"];
+    const test = "USD/CAD";
+    console.log("Symbols are: ", symbol);
+    // First check what is inside the table
+    //const result = await db.query("SELECT * FROM symbol");
+    //const result = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [test, date50days.toISOString()]);
+    
+    let dateToday = new Date();//what is current date
+    console.log("Today is non converted:", dateToday);
+    const daysAgo = 50;
+    //dateDaysAgo = await daysAgoConversion(daysAgo, dateToday);//get me the date which was xx days ago
+    const date50days = new Date(dateToday);
+    date50days.setDate(dateToday.getDate()-daysAgo);
+    console.log("50 days back is: ", date50days);
+
+    let result;
+    let result1;
+    
+    for(let i=0; i<symbol.length; i++){
+    //for(let i=0; i<1; i++){
+      result = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], date50days.toISOString()]);
+      result1 = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday.toISOString()]);
+
+      if (result.rows.length > 0 && result1.rows.length > 0) {
+        console.log(`Result for ${symbol[i]} 50 days ago is:`, result.rows[0].rate);
+        console.log(`Result for ${symbol[i]} today is:`, result1.rows[0].rate);
+
+        let varC = result1.rows[0].rate - result.rows[0].rate;
+        let varD = ((varC / result.rows[0].rate) * 100).toPrecision(2);
+        console.log(`Strength for ${symbol[i]} is: ${varD}%`);
+      } else {
+        console.log(`No data found for ${symbol[i]}`);
+      }
+    };
+
+    return;
+  }catch (error) {
+    console.error("Error reading/inserting data into database:", error.stack);
+    throw error;
+  };
+};
+
+//------------------------ FUNCTION ---------------------------------//
+//save data from the API endpoint into the database
+const saveAPIDataIntoDatabase = async (db, ratesEntries, dateTimestamp) => {
+  console.log("Entering into database and trying to save data from the API");
+  console.log("symbol, rate, date", ratesEntries[0][0], ratesEntries[0][0], dateTimestamp);
+
+  try{
+    /*
+    for(let i=0; i<ratesEntries.length; i++)
+    //for(let i=0; i<1; i++)// testing with only 1 record
+    {
+      await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", ["USD/" + ratesEntries[i][0], ratesEntries[i][1], dateTimestamp]);
+    };
+    */
+
+    //return back from the function
+    return;
+  }
+  catch (error) {
+    console.error("Error inserting data into database:", error.stack);
+    throw error;
+  };
+  
+};
+
+//------------------------ FUNCTION ---------------------------------//
 const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
     try {
       console.log("Fetching data...");
 
 
 
-      let dateToday = new Date();//what is current date
-      console.log("Today is non converted:", dateToday);
+
       //dateToday = await dateConversion(dateToday);//current date
       //console.log("Today is converted:", dateToday);
 
-      const daysAgo = 50;
-      //dateDaysAgo = await daysAgoConversion(daysAgo, dateToday);//get me the date which was xx days ago
-      const date50days = new Date(dateToday);
-      date50days.setDate(dateToday.getDate()-daysAgo);
-      console.log("50 days back is: ", date50days);
-      const symbol = "EUR/USD";
-      // First check what is inside the table
-      //const result = await db.query("SELECT * FROM symbol");
-      const result = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol, date50days.toISOString()]);3
-      const result1 = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol, dateToday.toISOString()]);
-      //check is there anything inside the database
-      console.log("result length is:", result.rows.length);
-      console.log("result 50 days ago is:", result.rows[0].rate);
-      console.log("result today ago is:", result1.rows[0].rate);
-      console.log("result today ago is:", result1.rows[0].symbol);
 
-      let varC = result1.rows[0].rate - result.rows[0].rate;
-      let varD = ((varC / result.rows[0].rate) * 100).toPrecision(2);
-
-      console.log(`Strength is: ${varD}`);
 
       let newDate; // Move the declaration outside the loop
 
