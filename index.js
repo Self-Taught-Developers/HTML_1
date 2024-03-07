@@ -98,14 +98,21 @@ const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
       const date50days = new Date(dateToday);
       date50days.setDate(dateToday.getDate()-daysAgo);
       console.log("50 days back is: ", date50days);
-
+      const symbol = "EUR/USD";
       // First check what is inside the table
       //const result = await db.query("SELECT * FROM symbol");
-      const result = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", ['EUR/USD', date50days.toISOString()]);
+      const result = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol, date50days.toISOString()]);3
+      const result1 = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol, dateToday.toISOString()]);
       //check is there anything inside the database
       console.log("result length is:", result.rows.length);
       console.log("result 50 days ago is:", result.rows[0].rate);
+      console.log("result today ago is:", result1.rows[0].rate);
+      console.log("result today ago is:", result1.rows[0].symbol);
 
+      let varC = result1.rows[0].rate - result.rows[0].rate;
+      let varD = ((varC / result.rows[0].rate) * 100).toPrecision(2);
+
+      console.log(`Strength is: ${varD}`);
 
       let newDate; // Move the declaration outside the loop
 
@@ -119,14 +126,14 @@ const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
 
       console.log("entering database:");
       
-      /* // currently commented because I am working on calculations from the database. I do not want to insert anything into the database for now
+       // currently commented because I am working on calculations from the database. I do not want to insert anything into the database for now
       // Insert data into the 'symbol' table using parameterized query with all data from the JSON
-      for(let i=0; i<ratesEntries.length; i++)
+      for(let i=0; i<result.rows.length; i++)
       //for(let i=0; i<1; i++)// testing with only 1 record
       {
-        await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", ["USD/" + ratesEntries[i][0], ratesEntries[i][1], dateTimestamp]);
+        await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", [result.rows[0].symbol, varD, dateToday.toISOString()]);
       };
-      */
+      
 
       return result.rows;
     } 
