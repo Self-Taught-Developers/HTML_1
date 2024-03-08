@@ -45,12 +45,17 @@ app.get("/Refresh", async (req, res) => {
     const fifteenthRate = fifteenthEntry[1];
 
 
-    // call the aysnchronous function and save received data into the database
+    //call the aysnchronous function and save received data into the database
     await saveAPIDataIntoDatabase (db, ratesEntries, dateTimestamp);
     console.log("Done saving API data into database. Moving forward");
 
+    //read the data from the database, make a calculation and then save the calculated values for later use
     await readDatabaseAndFilter(db);
+    console.log("Done saving calculated data into database. Moving forward");
 
+    //read the data from the database for certain symbols, like USD, and then calculate the strength for the USD and save the strength into the database - third table
+    await calculateStrength (db);
+    console.log("Calculation of a strength for certain symbols is done. Moving forward");
 
     // Call the asynchronous function and get the fetched data from the Database
     const quizData = await fetchQuizData(db, ratesEntries, dateTimestamp);
@@ -81,9 +86,46 @@ app.get("/Refresh", async (req, res) => {
     res.status(404).send(error.message);
   }
 });
+//------------------------ FUNCTION ---------------------------------//
+//read data about certain symbol and calculate average strength and save it into the database for the chart
+const calculateStrength = async (db) =>{
+  console.log("Entering into strength calculation function")
+  try{
+    const symbol = ["USD/EUR", "USD/GBP", "USD/CAD", "USD/CHF", "USD/JPY", "USD/AUD", "USD/NZD"];
+    console.log("Symbol lenghts is:", symbol.length);
+    let dateToday = new Date(); // current date
+    let varE;
+    let varF = 0;
+    let varH = 0;
+    for(let i=0; i<symbol.length; i++)
+    {
+      console.log("Entering into for loop:");
+      varE = await db.query("SELECT * FROM calculation WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday.toISOString()]);
+      varF += varE.rows[i].vard; 
+      console.log("varE length is:", varE.rows.length)
+      varH++;
+      if(varE.rows.length > 0){
+        console.log("Sum of strength is:", varF);
+        let varG = varF/varH;
+        console.log("Average strength is:", varG);
+        console.log("varH is:", varH);
+      }else {
+        console.log(`No data found for ${symbol[i]}`);
+      }
+
+    };
+    
+
+    return;
+  }catch (error){
+    console.error("Error reading/inserting data into strength database:", error.stack);
+    throw error;
+  }
+  
+}
 
 //------------------------ FUNCTION ---------------------------------//
-//read data from the database and filter symbols
+//read data from the database and filter symbols and make the calculation
 const readDatabaseAndFilter = async (db) =>{
   console.log("Entering into database for reading and filtering symbols");
   try{
@@ -102,21 +144,26 @@ const readDatabaseAndFilter = async (db) =>{
     date50days.setDate(dateToday.getDate()-daysAgo);
     console.log("50 days back is: ", date50days);
 
-    let result;
-    let result1;
+    let varA;
+    let varB;
     
     for(let i=0; i<symbol.length; i++){
     //for(let i=0; i<1; i++){
-      result = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], date50days.toISOString()]);
-      result1 = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday.toISOString()]);
+      varA = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], date50days.toISOString()]);
+      //console.log("varA is: ", varA);
+      varB = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday.toISOString()]);
+      //console.log("varB is: ", varB);
 
-      if (result.rows.length > 0 && result1.rows.length > 0) {
-        console.log(`Result for ${symbol[i]} 50 days ago is:`, result.rows[0].rate);
-        console.log(`Result for ${symbol[i]} today is:`, result1.rows[0].rate);
+      if (varA.rows.length > 0 && varB.rows.length > 0) {
+        console.log(`Result for ${symbol[i]} 50 days ago is:`, varA.rows[0].rate);
+        console.log(`Result for ${symbol[i]} today is:`, varB.rows[0].rate);
 
-        let varC = result1.rows[0].rate - result.rows[0].rate;
-        let varD = ((varC / result.rows[0].rate) * 100).toPrecision(2);
+        let varC = (varB.rows[0].rate - varA.rows[0].rate).toPrecision(2);
+        let varD = ((varC / varA.rows[0].rate) * 100).toPrecision(2);
         console.log(`Strength for ${symbol[i]} is: ${varD}%`);
+        //save this into second table for chart analysis later on
+        await db.query("INSERT INTO calculation (symbol, varc, vard, date) VALUES ($1, $2, $3, $4)", [symbol[i], varC, varD, dateToday]);
+
       } else {
         console.log(`No data found for ${symbol[i]}`);
       }
