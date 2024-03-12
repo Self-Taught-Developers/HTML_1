@@ -5,8 +5,17 @@ import pg from "pg";
 
 const app = express();
 const port = 3000;
-const API_URL = "https://openexchangerates.org/api/latest.json?app_id=";
-const yourAPIKey = "015c691a73de4e65877f35f5d775d7c2";
+
+//open exchange rates
+//const API_URL = "https://openexchangerates.org/api/latest.json?app_id=";
+//const yourAPIKey = "015c691a73de4e65877f35f5d775d7c2";
+
+//fcsapi
+const API_URL = "https://fcsapi.com/api-v3/forex/latest?symbol=all_forex&access_key=";
+//const yourAPIKey = "ELJUZSh8SW3bCFqj5L2DHCfB";
+const yourAPIKey = "ELJUZSh8SW3bCFqj5L2DHCf";
+
+//https://fcsapi.com/api-v3/forex/latest?symbol=all_forex&access_key=ELJUZSh8SW3bCFqj5L2DHCfB
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,16 +42,56 @@ app.get("/Refresh", async (req, res) => {
     console.log("Connected to the database.");
 
     //get raw data from the API endpoint
-    const result = await axios.get(API_URL + yourAPIKey);
-    const apiDate = result.data.timestamp;
-    const dateTimestamp = await dateConversionTimestamp(apiDate);
+    //const result = await axios.get(API_URL + yourAPIKey);
+    const result = {
+      status: true,
+      code: 200,
+      msg: "Successfully",
+      response: [
+        {
+          id: "1",
+          o: "1.09231",
+          h: "1.09398",
+          l: "1.09207",
+          c: "1.09376",
+          ch: "+0.00145",
+          cp: "+0.13%",
+          t: "1710222656",
+          s: "EUR/USD",
+          tm: "2024-03-12 05:50:56"
+        }
+        // Add more records if needed
+      ],
+      info: {
+        server_time: "2024-03-12 05:51:55 UTC",
+        credit_count: 20
+      }
+    };
+    
+    
+    //console.log("Data from the JSON: ", result.data.info.server_time);
+    //test
+    console.log("Data from the JSON: ", result.info.server_time);
+
+    //check the date form the JSON from the fcsapi
+    //const apiDate = result.data.info.server_time;
+    //test
+    const apiDate = result.info.server_time;
+
+    const dateTimestamp = await dateConversion(apiDate);
+    //const dateTimestamp = apiDate;
     console.log("formattedDate returned:", dateTimestamp);
+    
     //save data from the JSON file into object variable
-    const ratesEntries = Object.entries(result.data.rates);
+    //const ratesEntries = result.data.response;
+    //test
+    const ratesEntries = result.response;
+
+    console.log("ratesEntries[0]:", ratesEntries[0].s);
 
     //read the data from the second(first is 0, second is 1) record
-    const fifteenthEntry = ratesEntries[1];
-    const fifteenthRate = fifteenthEntry[1];
+    const fifteenthEntry = ratesEntries[0];
+    const fifteenthRate = fifteenthEntry[0];
 
 
     //call the aysnchronous function and save received data into the database
@@ -92,29 +141,36 @@ const calculateStrength = async (db) =>{
   console.log("Entering into strength calculation function")
   try{
     const symbol = ["USD/EUR", "USD/GBP", "USD/CAD", "USD/CHF", "USD/JPY", "USD/AUD", "USD/NZD"];
-    console.log("Symbol lenghts is:", symbol.length);
+    console.log("Symbol lenght is:", symbol.length);
     let dateToday = new Date(); // current date
     let varE;
     let varF = 0;
     let varH = 0;
+    let varG = 0;
     for(let i=0; i<symbol.length; i++)
     {
       console.log("Entering into for loop:");
       varE = await db.query("SELECT * FROM calculation WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday.toISOString()]);
-      varF += varE.rows[i].vard; 
-      console.log("varE length is:", varE.rows.length)
-      varH++;
-      if(varE.rows.length > 0){
-        console.log("Sum of strength is:", varF);
-        let varG = varF/varH;
-        console.log("Average strength is:", varG);
-        console.log("varH is:", varH);
+      if (varE.rows.length > 0)
+      {
+        varF += varE.rows[i].vard; 
+        console.log("varE length is:", varE.rows.length)
+        varH++;
+        if(varE.rows.length > 0){
+          console.log("Sum of strength is:", varF);
+          varG = varF/varH;
+          console.log("Average strength is:", varG);
+          console.log("varH is:", varH);
+
+          
+        }else {
+          console.log(`No data found for ${symbol[i]}`);
+        }
       }else {
         console.log(`No data found for ${symbol[i]}`);
-      }
-
+      };
     };
-    
+    await db.query("INSERT INTO strength (symbol, varstrength, date) VALUES ($1, $2, $3)", ["USD", varG, dateToday]);
 
     return;
   }catch (error){
@@ -180,16 +236,40 @@ const readDatabaseAndFilter = async (db) =>{
 //save data from the API endpoint into the database
 const saveAPIDataIntoDatabase = async (db, ratesEntries, dateTimestamp) => {
   console.log("Entering into database and trying to save data from the API");
-  console.log("symbol, rate, date", ratesEntries[0][0], ratesEntries[0][0], dateTimestamp);
+  console.log("symbol, rate, date", ratesEntries[0].s, ratesEntries[0].c, dateTimestamp);
 
   try{
-    /*
-    for(let i=0; i<ratesEntries.length; i++)
-    //for(let i=0; i<1; i++)// testing with only 1 record
+    
+    let dateToday = new Date();//what is current date
+    //first read from the database is there something inside
+    let varB = await db.query("SELECT * FROM symbol");
+
+    //if there something in the database use the date
+    if(varB.length > 0)
     {
-      await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", ["USD/" + ratesEntries[i][0], ratesEntries[i][1], dateTimestamp]);
-    };
-    */
+      console.log("There is current data in the database:", varB);
+      for(let i=0; i<varB.length; i++)
+      {
+        varB = await dateConversion(varB.rows[i].date);
+      }
+    }else {
+      console.log("There is NOTHING in the database:", varB.length);
+    }
+
+    
+    //if there is no date that is equal today date then proceed and save new data into database
+    if (!varB.length)
+    {
+      console.log("Saving data into database because there is no record with today date");
+      for(let i=0; i<ratesEntries.length; i++)
+      //for(let i=0; i<1; i++)// testing with only 1 record
+      {
+        await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", [ratesEntries[i].s, ratesEntries[i].c, dateTimestamp]);
+      };
+    }else{
+      console.log("Not saving new data into database because there is record with current date");
+    }
+    
 
     //return back from the function
     return;
