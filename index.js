@@ -12,8 +12,7 @@ const port = 3000;
 
 //fcsapi
 const API_URL = "https://fcsapi.com/api-v3/forex/latest?symbol=all_forex&access_key=";
-//const yourAPIKey = "ELJUZSh8SW3bCFqj5L2DHCfB";
-const yourAPIKey = "ELJUZSh8SW3bCFqj5L2DHCf";
+const yourAPIKey = "ELJUZSh8SW3bCFqj5L2DHCfB";
 
 //https://fcsapi.com/api-v3/forex/latest?symbol=all_forex&access_key=ELJUZSh8SW3bCFqj5L2DHCfB
 
@@ -42,8 +41,8 @@ app.get("/Refresh", async (req, res) => {
     console.log("Connected to the database.");
 
     //get raw data from the API endpoint
-    //const result = await axios.get(API_URL + yourAPIKey);
-    const result = {
+    const result = await axios.get(API_URL + yourAPIKey);
+    /* const result = {
       status: true,
       code: 200,
       msg: "Successfully",
@@ -66,26 +65,26 @@ app.get("/Refresh", async (req, res) => {
         server_time: "2024-03-12 05:51:55 UTC",
         credit_count: 20
       }
-    };
+    }; */
     
     
-    //console.log("Data from the JSON: ", result.data.info.server_time);
+    console.log("Data from the JSON: ", result.data.info.server_time);
     //test
-    console.log("Data from the JSON: ", result.info.server_time);
+    //console.log("Data from the JSON: ", result.info.server_time);
 
     //check the date form the JSON from the fcsapi
-    //const apiDate = result.data.info.server_time;
+    const apiDate = result.data.info.server_time;
     //test
-    const apiDate = result.info.server_time;
+    //const apiDate = result.info.server_time;
 
     const dateTimestamp = await dateConversion(apiDate);
     //const dateTimestamp = apiDate;
     console.log("formattedDate returned:", dateTimestamp);
     
     //save data from the JSON file into object variable
-    //const ratesEntries = result.data.response;
+    const ratesEntries = result.data.response;
     //test
-    const ratesEntries = result.response;
+    //const ratesEntries = result.response;
 
     console.log("ratesEntries[0]:", ratesEntries[0].s);
 
@@ -244,35 +243,42 @@ const saveAPIDataIntoDatabase = async (db, ratesEntries, dateTimestamp) => {
     //first read from the database is there something inside
     let varB = await db.query("SELECT * FROM symbol");
 
-    //if there something in the database use the date
-    if(varB.length > 0)
+    console.log("How many rows are currently in the database:", varB.rows.length);
+    //if there is something in the database use the date
+    if(varB.rows.length > 0)
     {
-      console.log("There is current data in the database:", varB);
-      for(let i=0; i<varB.length; i++)
+      for(let i=0; i<varB.rows.length; i++)
       {
-        varB = await dateConversion(varB.rows[i].date);
+        varB.rows[i].date = await dateConversion(varB.rows[i].date);//change the date format into clean formatting
       }
     }else {
       console.log("There is NOTHING in the database:", varB.length);
     }
 
-    
-    //if there is no date that is equal today date then proceed and save new data into database
-    if (!varB.length)
+
+    let varL = 0;
+
+    for(let i=0; i<varB.rows.length; i++)
     {
+      if(varB.rows[i].date === dateTimestamp)
+        varL++;
+    };
+
+    console.log("varL is equal to: ", varL);
+
+    if(varL)
+    {
+      console.log("Not saving new data into database because there is record with current date");
+      return;
+    }else{
+      //if there is no date that is equal today date then proceed and save new data into database
       console.log("Saving data into database because there is no record with today date");
       for(let i=0; i<ratesEntries.length; i++)
-      //for(let i=0; i<1; i++)// testing with only 1 record
       {
         await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", [ratesEntries[i].s, ratesEntries[i].c, dateTimestamp]);
       };
-    }else{
-      console.log("Not saving new data into database because there is record with current date");
-    }
-    
-
-    //return back from the function
-    return;
+    };
+    return;//return back from the function
   }
   catch (error) {
     console.error("Error inserting data into database:", error.stack);
@@ -360,7 +366,7 @@ const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
   
         // Construct the date string in the desired format
         const formattedDate = `${year}-${month}-${day}`;
-        console.log("formattedDate:", formattedDate);
+        //console.log("formattedDate:", formattedDate);
         return formattedDate;
       }catch (error) 
       {
@@ -368,31 +374,31 @@ const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
         throw error;
       };
     }
-        //------------------------ FUNCTION ---------------------------------//
-        const daysAgoConversion = async(daysAgo, dateToday) => {
-          try{
-            const currentDateMiliSeconds = new Date();
-            
-            
-            console.log("currentDateMiliSeconds:", currentDateMiliSeconds);
-            /*
-            // Get the year, month (adjusted for zero-index), and day
-            const year = dateFromTimestamp.getFullYear();
-            const month = dateFromTimestamp.getMonth() + 1; // Add 1 because months are started indexed from 0
-            const day = dateFromTimestamp.getDate();
-      
-            // Construct the date string in the desired format
-            const formattedDate = `${year}-${month}-${day}`;
-            console.log("formattedDate:", formattedDate);
-            return formattedDate;
-            */
-           return;
-          }catch (error) 
-          {
-            console.error("Error converting date:", error.stack);
-            throw error;
-          };
-        }
+    //------------------------ FUNCTION ---------------------------------//
+    const daysAgoConversion = async(daysAgo, dateToday) => {
+      try{
+        const currentDateMiliSeconds = new Date();
+        
+        
+        console.log("currentDateMiliSeconds:", currentDateMiliSeconds);
+        /*
+        // Get the year, month (adjusted for zero-index), and day
+        const year = dateFromTimestamp.getFullYear();
+        const month = dateFromTimestamp.getMonth() + 1; // Add 1 because months are started indexed from 0
+        const day = dateFromTimestamp.getDate();
+  
+        // Construct the date string in the desired format
+        const formattedDate = `${year}-${month}-${day}`;
+        console.log("formattedDate:", formattedDate);
+        return formattedDate;
+        */
+        return;
+      }catch (error) 
+      {
+        console.error("Error converting date:", error.stack);
+        throw error;
+      };
+    };
     
 
 app.listen(port, () => {
