@@ -41,8 +41,9 @@ app.get("/Refresh", async (req, res) => {
     console.log("Connected to the database.");
 
     //get raw data from the API endpoint
-    const result = await axios.get(API_URL + yourAPIKey);
-    /* const result = {
+    //const result = await axios.get(API_URL + yourAPIKey);
+    //test
+    const result = {
       status: true,
       code: 200,
       msg: "Successfully",
@@ -57,34 +58,34 @@ app.get("/Refresh", async (req, res) => {
           cp: "+0.13%",
           t: "1710222656",
           s: "EUR/USD",
-          tm: "2024-03-12 05:50:56"
+          tm: "2024-03-14 05:50:56"
         }
         // Add more records if needed
       ],
       info: {
-        server_time: "2024-03-12 05:51:55 UTC",
+        server_time: "2024-03-14 05:51:55 UTC",
         credit_count: 20
       }
-    }; */
+    };  
     
     
-    console.log("Data from the JSON: ", result.data.info.server_time);
+    //console.log("Data from the JSON: ", result.data.info.server_time);
     //test
-    //console.log("Data from the JSON: ", result.info.server_time);
+    console.log("Data from the JSON: ", result.info.server_time);
 
     //check the date form the JSON from the fcsapi
-    const apiDate = result.data.info.server_time;
+    //const apiDate = result.data.info.server_time;
     //test
-    //const apiDate = result.info.server_time;
+    const apiDate = result.info.server_time;
 
     const dateTimestamp = await dateConversion(apiDate);
     //const dateTimestamp = apiDate;
     console.log("formattedDate returned:", dateTimestamp);
     
     //save data from the JSON file into object variable
-    const ratesEntries = result.data.response;
+    //const ratesEntries = result.data.response;
     //test
-    //const ratesEntries = result.response;
+    const ratesEntries = result.response;
 
     console.log("ratesEntries[0]:", ratesEntries[0].s);
 
@@ -150,10 +151,17 @@ const calculateStrength = async (db) =>{
     {
       console.log("Entering into for loop:");
       varE = await db.query("SELECT * FROM calculation WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday.toISOString()]);
+
+      console.log("Current symbol is: ", symbol[i]);
+      console.log("Current i is: ", i);
+      console.log("Current varE length is:", varE.rows.length);
+
+      /* // this part is not ok because it goes into varE.rows for i even there is nothing inside. And varE of i should have only one record for the current date
       if (varE.rows.length > 0)
       {
+        console.log("Current varE.rows[i].vard is: ", varE.rows[i].vard);
         varF += varE.rows[i].vard; 
-        console.log("varE length is:", varE.rows.length)
+        console.log("varE length is:", varE.rows.length);
         varH++;
         if(varE.rows.length > 0){
           console.log("Sum of strength is:", varF);
@@ -164,10 +172,11 @@ const calculateStrength = async (db) =>{
           
         }else {
           console.log(`No data found for ${symbol[i]}`);
-        }
+        };
       }else {
         console.log(`No data found for ${symbol[i]}`);
       };
+      */
     };
     await db.query("INSERT INTO strength (symbol, varstrength, date) VALUES ($1, $2, $3)", ["USD", varG, dateToday]);
 
@@ -193,21 +202,26 @@ const readDatabaseAndFilter = async (db) =>{
     
     let dateToday = new Date();//what is current date
     console.log("Today is non converted:", dateToday);
-    const daysAgo = 50;
+
+    const daysAgo = 1;
     //dateDaysAgo = await daysAgoConversion(daysAgo, dateToday);//get me the date which was xx days ago
-    const date50days = new Date(dateToday);
+    let date50days = new Date(dateToday);
     date50days.setDate(dateToday.getDate()-daysAgo);
+    date50days = await dateConversion(date50days);//change the date format into clean formatting
     console.log("50 days back is: ", date50days);
+
+    dateToday = await dateConversion(dateToday);//change the date format into clean formatting
+    console.log("Today is converted:", dateToday);
 
     let varA;
     let varB;
     
     for(let i=0; i<symbol.length; i++){
     //for(let i=0; i<1; i++){
-      varA = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], date50days.toISOString()]);
-      //console.log("varA is: ", varA);
-      varB = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday.toISOString()]);
-      //console.log("varB is: ", varB);
+      varA = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], date50days]);
+      console.log("varA is: ", varA.rows.length);
+      varB = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday]);
+      console.log("varB is: ", varB.rows.length);
 
       if (varA.rows.length > 0 && varB.rows.length > 0) {
         console.log(`Result for ${symbol[i]} 50 days ago is:`, varA.rows[0].rate);
@@ -220,7 +234,7 @@ const readDatabaseAndFilter = async (db) =>{
         await db.query("INSERT INTO calculation (symbol, varc, vard, date) VALUES ($1, $2, $3, $4)", [symbol[i], varC, varD, dateToday]);
 
       } else {
-        console.log(`No data found for ${symbol[i]}`);
+        console.log(`No data found for 50daysago and for today for a symbol: ${symbol[i]}`);
       }
     };
 
@@ -243,30 +257,10 @@ const saveAPIDataIntoDatabase = async (db, ratesEntries, dateTimestamp) => {
     //first read from the database is there something inside
     let varB = await db.query("SELECT * FROM symbol");
 
-    console.log("How many rows are currently in the database:", varB.rows.length);
-    //if there is something in the database use the date
-    if(varB.rows.length > 0)
-    {
-      for(let i=0; i<varB.rows.length; i++)
-      {
-        varB.rows[i].date = await dateConversion(varB.rows[i].date);//change the date format into clean formatting
-      }
-    }else {
-      console.log("There is NOTHING in the database:", varB.length);
-    }
+    //function to calculate how many records in the database are the same as the current date
+    let dateInDatabase = await checkDateRecords(varB, dateTimestamp);
 
-
-    let varL = 0;
-
-    for(let i=0; i<varB.rows.length; i++)
-    {
-      if(varB.rows[i].date === dateTimestamp)
-        varL++;
-    };
-
-    console.log("varL is equal to: ", varL);
-
-    if(varL)
+    if(dateInDatabase)
     {
       console.log("Not saving new data into database because there is record with current date");
       return;
@@ -285,6 +279,39 @@ const saveAPIDataIntoDatabase = async (db, ratesEntries, dateTimestamp) => {
     throw error;
   };
   
+};
+//------------------------ FUNCTION ---------------------------------//
+//read dates from the database and compare them with the current date. Return something is there are records with the current date
+const checkDateRecords = async(databaseRecords, dateTimestamp) => {
+  try{
+    let varL = 0; //variable for calculating how many records are in the database with the current date
+    console.log("Entering into function to check are the dates from the database equal to current date");
+    console.log("databaseRecords.rows.length is: ", databaseRecords.rows.length);
+    //if there is something in the database use the date
+    if(databaseRecords.rows.length > 0)
+    {
+      for(let i=0; i<databaseRecords.rows.length; i++)
+      {
+        databaseRecords.rows[i].date = await dateConversion(databaseRecords.rows[i].date);//change the date format into clean formatting
+
+        //check how many dates in the database are the same as current date
+        if(databaseRecords.rows[i].date === dateTimestamp)
+        {
+          varL++;
+        };        
+      };
+    }else {
+      console.log("There is NOTHING in the database:", varB.length);
+    };
+
+    console.log("varL is equal to: ", varL);
+
+    return varL;
+  }
+  catch (error){
+    console.error("Error reading dates from the database:", error.stack);
+    throw error;
+  };
 };
 
 //------------------------ FUNCTION ---------------------------------//
