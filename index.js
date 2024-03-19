@@ -3,6 +3,11 @@ import axios from "axios";
 import bodyParser from "body-parser";
 import pg from "pg";
 
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 const app = express();
 const port = 3000;
 
@@ -110,8 +115,24 @@ app.get("/Refresh", async (req, res) => {
     const strengthData = await fetchStrengthData(db);
 
     console.log('Strength Data:', strengthData); // Log the value of strengthData
+
+    //convert database Date into normal date
+    if(strengthData.length > 0)
+    {
+      for(let i=0; i<strengthData.length; i++)
+      {
+        strengthData[i].date = await dateConversion(strengthData[i].date);//change the date format into clean formatting
+       
+      };
+    }
+
     // Pass the data to your chart rendering function or template
-    res.render("index.ejs", { strengthData });
+    console.log("Strength data at the position 0 is", strengthData[0].date);
+
+    let testVar = strengthData;
+    //sending data to .ejs file
+    res.render("index.ejs", { testVar });
+
 
     // Close the database connection after the request is processed
     await db.end();
@@ -131,7 +152,7 @@ const fetchStrengthData = async (db) => {
 
     // Format the data into an array of objects with 'date' and 'varstrength' properties
     const chartData = strengthData.rows.map(row => ({
-      date: row.date.toISOString(),
+      date: row.date,
       strength: parseFloat(row.varstrength)
     }));
 

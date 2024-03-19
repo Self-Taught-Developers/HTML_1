@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<body>
+    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+    <script>
+        // Function to make an AJAX request to fetch strengthData
+        function fetchDataAndDrawChart() {
+            // Make an AJAX request to the server
+            fetch("../Refresh")
+                .then(response => response.json())
+                .then(data => {
+                    const strengthData = data.strengthData;
+
+                    // Extract x and y values from strengthData
+                    const xValues = strengthData.map(data => data.date);
+                    const yValues = strengthData.map(data => data.strength);
+
+                    new Chart("myChart", {
+                        type: "line",
+                        data: {
+                            labels: xValues,
+                            datasets: [{
+                                fill: false,
+                                lineTension: 0,
+                                backgroundColor: "rgba(0,0,255,1.0)",
+                                borderColor: "rgba(0,0,255,0.1)",
+                                data: yValues
+                            }]
+                        },
+                        options: {
+                            legend: { display: false },
+                            scales: {
+                                yAxes: [{ ticks: { min: Math.min(...yValues), max: Math.max(...yValues) } }],
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        }
+
+        // Call the function to fetch data and draw chart when the page loads
+        fetchDataAndDrawChart();
+    </script>
+
+</body>
+
+</html>

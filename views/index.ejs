@@ -3,7 +3,8 @@
 
 <head>
   <title>Express App</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+  </script>
 
   <style>
     body {
@@ -38,38 +39,49 @@
 <body>
   <button id="Refresh" onclick="window.location.href='/Refresh'">Refresh</button>
 
-  <canvas id="strengthChart" width="800" height="400"></canvas>
+  <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+
+
+
+  <!-- Injecting server-side data into a hidden HTML element -->
+  <div id="testVar" style="display: none;">
+    <%= JSON.stringify(testVar) %>
+  </div>
 
   <script>
-    // Check if strengthData is defined and not empty
-    const strengthData = <%= strengthData ?JSON.stringify(strengthData) : '[]' %>;
+    // Extracting server-side data from the hidden HTML element
+    var testVar = JSON.parse(document.getElementById('testVar').textContent);
+    var dates = testVar.map(entry => entry.date);
+    var strengths = testVar.map(entry => entry.strength);
 
-    // Extract dates and strengths from the data
-    const dates = strengthData.map(data => data.date);
-    const strengths = strengthData.map(data => data.strength);
-
-    // Create a new Chart instance if there is data
-    if (dates.length > 0 && strengths.length > 0) {
-      const ctx = document.getElementById('strengthChart').getContext('2d');
-      const chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: dates,
-          datasets: [{
-            label: 'USD Strength',
-            data: strengths,
-            borderColor: 'blue',
-            backgroundColor: 'transparent',
-            borderWidth: 1
+    // Render the chart using Chart.js
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Strength',
+          data: strengths,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
           }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
         }
-      });
-    }
+      }
+    });
   </script>
+
+  </div>
+
 </body>
 
 </html>
