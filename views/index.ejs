@@ -3,6 +3,8 @@
 
 <head>
   <title>Express App</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+
   <style>
     body {
       display: flex;
@@ -12,74 +14,62 @@
       height: 100vh;
       font-family: Arial, sans-serif;
       background-color: #f0f0f0;
-      margin: 20px;
-      padding-left: 20px;
+      margin: 0;
+      padding: 0;
     }
 
-    button {
-      margin: 10px;
-      padding: 15px 30px;
+    #Refresh {
+      margin-top: 20px;
+      padding: 10px 20px;
       font-size: 16px;
       border: none;
       border-radius: 5px;
+      background-color: #3498db;
       color: white;
       cursor: pointer;
     }
 
-    #Refresh {
-      background-color: #3498db;
-    }
-
-    #basicAuth {
-      background-color: #2ecc71;
-    }
-
-    #apiKey {
-      background-color: #f1c40f;
-    }
-
-    #bearerToken {
-      background-color: #e74c3c;
-    }
-
-    .response-area {
-      display: inline-block;
-      justify-content: center;
-      margin-top: 50px;
-      margin-left: 50px;
-      background-color: white;
-      padding: 50px;
-    }
-
-    .inner {
-      background-color: #fff;
-      /* White background for contrast */
-      border: 1px solid #ccc;
-      /* Light grey border */
-      padding: 20px;
-      margin-top: 10px;
-      overflow-x: auto;
-      /* Adds a horizontal scrollbar if content overflows */
-      font-family: 'Courier New', Courier, monospace;
-      /* Monospaced font for better readability */
-      white-space: pre-wrap;
-      /* Ensures formatting is preserved if JSON is pretty-printed */
-      word-wrap: break-word;
-      /* Ensures long strings do not overflow their container */
+    #strengthChart {
+      margin-top: 20px;
     }
   </style>
 </head>
 
 <body>
-  <button type="submit" id="Refresh" onclick="window.location.href='/Refresh'">Refresh</button>
+  <button id="Refresh" onclick="window.location.href='/Refresh'">Refresh</button>
 
+  <canvas id="strengthChart" width="800" height="400"></canvas>
 
-  <div class="response-area">
-    <div class="inner">
-      <%=content%>
-        <%=content1%>
-    </div>
-  </div>
+  <script>
+    // Check if strengthData is defined and not empty
+    const strengthData = <%= strengthData ?JSON.stringify(strengthData) : '[]' %>;
+
+    // Extract dates and strengths from the data
+    const dates = strengthData.map(data => data.date);
+    const strengths = strengthData.map(data => data.strength);
+
+    // Create a new Chart instance if there is data
+    if (dates.length > 0 && strengths.length > 0) {
+      const ctx = document.getElementById('strengthChart').getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [{
+            label: 'USD Strength',
+            data: strengths,
+            borderColor: 'blue',
+            backgroundColor: 'transparent',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+    }
+  </script>
 </body>
 
 </html>

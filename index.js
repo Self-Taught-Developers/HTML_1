@@ -43,7 +43,7 @@ app.get("/Refresh", async (req, res) => {
     //get raw data from the API endpoint
     //const result = await axios.get(API_URL + yourAPIKey);
     //test
-    const result = {
+     const result = {
       status: true,
       code: 200,
       msg: "Successfully",
@@ -66,8 +66,8 @@ app.get("/Refresh", async (req, res) => {
         server_time: "2024-03-14 05:51:55 UTC",
         credit_count: 20
       }
-    };  
-    
+    };   
+     
     
     //console.log("Data from the JSON: ", result.data.info.server_time);
     //test
@@ -107,26 +107,11 @@ app.get("/Refresh", async (req, res) => {
     console.log("Calculation of a strength for certain symbols is done. Moving forward");
 
     // Call the asynchronous function and get the fetched data from the Database
-    const quizData = await fetchQuizData(db, ratesEntries, dateTimestamp);
-    // Ensure that quizData is an array before trying to access its elements
-    if (Array.isArray(quizData) && quizData.length >= 1) {
-      const currency = quizData[1].symbol.trim(); // Trim to remove any leading/trailing spaces
-      const rate = parseFloat(quizData[1].rate); // Convert rate to a number
-      const dateTime = quizData[1].date;
+    const strengthData = await fetchStrengthData(db);
 
-      console.log("Date from the Database:", dateTime);
-
-      // If you want to display both the currency code and the rate, you can construct a string or object
-      const content = `Currency: ${fifteenthEntry[0]}, Rate: ${fifteenthRate}`;
-      const content1 = `Currency: ${currency}, Rate: ${rate}, Date: ${dateTime}`;
-
-      res.render("index.ejs", {
-        content: JSON.stringify(content),
-        content1: JSON.stringify(content1),
-      });
-    } else {
-      res.status(404).send("Quiz data not available or not in the expected format.");
-    }
+    console.log('Strength Data:', strengthData); // Log the value of strengthData
+    // Pass the data to your chart rendering function or template
+    res.render("index.ejs", { strengthData });
 
     // Close the database connection after the request is processed
     await db.end();
@@ -135,6 +120,28 @@ app.get("/Refresh", async (req, res) => {
     res.status(404).send(error.message);
   }
 });
+
+//------------------------ FUNCTION ---------------------------------//
+const fetchStrengthData = async (db) => {
+  try {
+    console.log("Fetching database strength data for the chart...");
+    const strengthData = await db.query("SELECT * FROM strength");
+
+    console.log("Data from the strength database is: ", strengthData.rows[0].varstrength, strengthData.rows[0].date);
+
+    // Format the data into an array of objects with 'date' and 'varstrength' properties
+    const chartData = strengthData.rows.map(row => ({
+      date: row.date.toISOString(),
+      strength: parseFloat(row.varstrength)
+    }));
+
+    return chartData;
+  } 
+  catch (error) {
+    console.error("Error fetching data:", error.stack);
+    throw error;
+  };
+}
 //------------------------ FUNCTION ---------------------------------//
 //read data about certain symbol and calculate average strength and save it into the database for the chart
 const calculateStrength = async (db) =>{
@@ -156,27 +163,20 @@ const calculateStrength = async (db) =>{
       console.log("Current i is: ", i);
       console.log("Current varE length is:", varE.rows.length);
 
-      /* // this part is not ok because it goes into varE.rows for i even there is nothing inside. And varE of i should have only one record for the current date
       if (varE.rows.length > 0)
       {
-        console.log("Current varE.rows[i].vard is: ", varE.rows[i].vard);
-        varF += varE.rows[i].vard; 
+        console.log("Current varE.rows[i].vard is: ", varE.rows[0].vard);
+        varF += varE.rows[0].vard; //use only first row because there should be only one row for the current date for this symbol and add it to this var that contains all values from other symbols
         console.log("varE length is:", varE.rows.length);
         varH++;
-        if(varE.rows.length > 0){
-          console.log("Sum of strength is:", varF);
-          varG = varF/varH;
-          console.log("Average strength is:", varG);
-          console.log("varH is:", varH);
-
-          
-        }else {
-          console.log(`No data found for ${symbol[i]}`);
-        };
+        console.log("Sum of strength is:", varF);
+        varG = varF/varH;
+        console.log("Average strength is:", varG);
+        console.log("varH is:", varH);
       }else {
         console.log(`No data found for ${symbol[i]}`);
       };
-      */
+
     };
     await db.query("INSERT INTO strength (symbol, varstrength, date) VALUES ($1, $2, $3)", ["USD", varG, dateToday]);
 
@@ -185,7 +185,6 @@ const calculateStrength = async (db) =>{
     console.error("Error reading/inserting data into strength database:", error.stack);
     throw error;
   }
-  
 }
 
 //------------------------ FUNCTION ---------------------------------//
@@ -203,12 +202,12 @@ const readDatabaseAndFilter = async (db) =>{
     let dateToday = new Date();//what is current date
     console.log("Today is non converted:", dateToday);
 
-    const daysAgo = 1;
+    const daysAgo = 1; //how many days ago?
     //dateDaysAgo = await daysAgoConversion(daysAgo, dateToday);//get me the date which was xx days ago
     let date50days = new Date(dateToday);
     date50days.setDate(dateToday.getDate()-daysAgo);
     date50days = await dateConversion(date50days);//change the date format into clean formatting
-    console.log("50 days back is: ", date50days);
+    console.log("xx days back is: ", date50days);
 
     dateToday = await dateConversion(dateToday);//change the date format into clean formatting
     console.log("Today is converted:", dateToday);
@@ -216,13 +215,17 @@ const readDatabaseAndFilter = async (db) =>{
     let varA;
     let varB;
     
+    console.log("Symbol length is: ", symbol.length);
+
     for(let i=0; i<symbol.length; i++){
     //for(let i=0; i<1; i++){
       varA = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], date50days]);
-      console.log("varA is: ", varA.rows.length);
+      
       varB = await db.query("SELECT * FROM symbol WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday]);
-      console.log("varB is: ", varB.rows.length);
-
+      
+      console.log("varA is: ", varA.rows);
+      console.log("varB is: ", varB.rows);
+      
       if (varA.rows.length > 0 && varB.rows.length > 0) {
         console.log(`Result for ${symbol[i]} 50 days ago is:`, varA.rows[0].rate);
         console.log(`Result for ${symbol[i]} today is:`, varB.rows[0].rate);
@@ -237,6 +240,7 @@ const readDatabaseAndFilter = async (db) =>{
         console.log(`No data found for 50daysago and for today for a symbol: ${symbol[i]}`);
       }
     };
+    
 
     return;
   }catch (error) {
@@ -281,7 +285,7 @@ const saveAPIDataIntoDatabase = async (db, ratesEntries, dateTimestamp) => {
   
 };
 //------------------------ FUNCTION ---------------------------------//
-//read dates from the database and compare them with the current date. Return something is there are records with the current date
+//read dates from the database and compare them with the current date. Return something if there are records with the current date
 const checkDateRecords = async(databaseRecords, dateTimestamp) => {
   try{
     let varL = 0; //variable for calculating how many records are in the database with the current date
@@ -314,47 +318,7 @@ const checkDateRecords = async(databaseRecords, dateTimestamp) => {
   };
 };
 
-//------------------------ FUNCTION ---------------------------------//
-const fetchQuizData = async (db,ratesEntries, dateTimestamp) => {
-    try {
-      console.log("Fetching data...");
 
-
-
-
-      //dateToday = await dateConversion(dateToday);//current date
-      //console.log("Today is converted:", dateToday);
-
-
-
-      let newDate; // Move the declaration outside the loop
-
-      for(let j=0; j<result.rows.length; j++)
-      {
-        console.log(`result.rows.date[${j}]:`, result.rows[j].date);
-        //check the date in each of the records inside the database 
-        newDate = await dateConversionTimestamp(result.rows[j].date);
-        //console.log(`result.rows.date[${j}]:`, newDate);
-      }
-
-      console.log("entering database:");
-      
-       // currently commented because I am working on calculations from the database. I do not want to insert anything into the database for now
-      // Insert data into the 'symbol' table using parameterized query with all data from the JSON
-      for(let i=0; i<result.rows.length; i++)
-      //for(let i=0; i<1; i++)// testing with only 1 record
-      {
-        await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", [result.rows[0].symbol, varD, dateToday.toISOString()]);
-      };
-      
-
-      return result.rows;
-    } 
-    catch (error) {
-      console.error("Error fetching or inserting quiz data:", error.stack);
-      throw error;
-    };
-  }
   //------------------------ FUNCTION ---------------------------------//
   const dateConversionTimestamp = async(dates) => {
     try{
