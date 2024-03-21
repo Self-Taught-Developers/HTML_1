@@ -44,30 +44,138 @@
 
 
   <!-- Injecting server-side data into a hidden HTML element -->
-  <div id="testVar" style="display: none;">
-    <%= JSON.stringify(testVar) %>
+  <div id="testUSD" style="display: none;">
+    <%= JSON.stringify(varUSD) %>
+  </div>
+  <div id="testEUR" style="display: none;">
+    <%= JSON.stringify(varEUR) %>
+  </div>
+  <div id="testGBP" style="display: none;">
+    <%= JSON.stringify(varGBP) %>
+  </div>
+  <div id="testAUD" style="display: none;">
+    <%= JSON.stringify(varAUD) %>
+  </div>
+  <div id="testNZD" style="display: none;">
+    <%= JSON.stringify(varNZD) %>
+  </div>
+  <div id="testCAD" style="display: none;">
+    <%= JSON.stringify(varCAD) %>
+  </div>
+  <div id="testCHF" style="display: none;">
+    <%= JSON.stringify(varCHF) %>
+  </div>
+  <div id="testJPY" style="display: none;">
+    <%= JSON.stringify(varJPY) %>
   </div>
 
   <script>
     // Extracting server-side data from the hidden HTML element
-    var testVar = JSON.parse(document.getElementById('testVar').textContent);
-    var dates = testVar.map(entry => entry.date);
-    var strengths = testVar.map(entry => entry.strength);
+    var testUSD = JSON.parse(document.getElementById('testUSD').textContent);
+    var dates_USD = testUSD.map(entry => entry.date);
+    var strengths_USD = testUSD.map(entry => entry.strength);
+
+    var testEUR = JSON.parse(document.getElementById('testEUR').textContent);
+    var dates_EUR = testEUR.map(entry => entry.date);
+    var strengths_EUR = testEUR.map(entry => entry.strength);
+
+    var testGBP = JSON.parse(document.getElementById('testGBP').textContent);
+    var dates_GBP = testGBP.map(entry => entry.date);
+    var strengths_GBP = testGBP.map(entry => entry.strength);
+
+    var testAUD = JSON.parse(document.getElementById('testAUD').textContent);
+    var dates_AUD = testAUD.map(entry => entry.date);
+    var strengths_AUD = testAUD.map(entry => entry.strength);
+
+    var testNZD = JSON.parse(document.getElementById('testNZD').textContent);
+    var dates_NZD = testNZD.map(entry => entry.date);
+    var strengths_NZD = testNZD.map(entry => entry.strength);
+
+    var testCAD = JSON.parse(document.getElementById('testCAD').textContent);
+    var dates_CAD = testCAD.map(entry => entry.date);
+    var strengths_CAD = testCAD.map(entry => entry.strength);
+
+    var testCHF = JSON.parse(document.getElementById('testCHF').textContent);
+    var dates_CHF = testCHF.map(entry => entry.date);
+    var strengths_CHF = testCHF.map(entry => entry.strength);
+
+    var testJPY = JSON.parse(document.getElementById('testJPY').textContent);
+    var dates_JPY = testJPY.map(entry => entry.date);
+    var strengths_JPY = testJPY.map(entry => entry.strength);
 
     // Render the chart using Chart.js
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: dates,
+        labels: dates_USD, // Assuming both USD and EUR have the same dates
         datasets: [{
-          label: 'Strength',
-          data: strengths,
+          label: 'USD',
+          data: strengths_USD,
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        }]
+          borderWidth: 1,
+          fill: false // Remove filling area for USD dataset
+        },
+        {
+          label: 'EUR',
+          data: strengths_EUR,
+          backgroundColor: 'rgba(255, 89, 132, 0.2)',
+          borderColor: 'rgba(15, 89, 132, 1)',
+          borderWidth: 1,
+          fill: false // Remove filling area for USD dataset
+        },
+        {
+          label: 'GBP',
+          data: strengths_GBP,
+          backgroundColor: 'rgba(225, 79, 132, 0.2)',
+          borderColor: 'rgba(45, 79, 132, 1)',
+          borderWidth: 1,
+          fill: false // Remove filling area for USD dataset
+        },
+        {
+          label: 'AUD',
+          data: strengths_AUD,
+          backgroundColor: 'rgba(195, 69, 132, 0.2)',
+          borderColor: 'rgba(75, 69, 132, 1)',
+          borderWidth: 1,
+          fill: false // Remove filling area for USD dataset
+        },
+        {
+          label: 'NZD',
+          data: strengths_NZD,
+          backgroundColor: 'rgba(165, 59, 132, 0.2)',
+          borderColor: 'rgba(105, 59, 132, 1)',
+          borderWidth: 1,
+          fill: false // Remove filling area for USD dataset
+        },
+        {
+          label: 'CAD',
+          data: strengths_CAD,
+          backgroundColor: 'rgba(135, 49, 132, 0.2)',
+          borderColor: 'rgba(145, 49, 132, 1)',
+          borderWidth: 1,
+          fill: false // Remove filling area for USD dataset
+        },
+        {
+          label: 'CHF',
+          data: strengths_CHF,
+          backgroundColor: 'rgba(95, 39, 132, 0.2)',
+          borderColor: 'rgba(175, 39, 132, 1)',
+          borderWidth: 1,
+          fill: false // Remove filling area for USD dataset
+        },
+        {
+          label: 'JPY',
+          data: strengths_JPY,
+          backgroundColor: 'rgba(65, 29, 132, 0.2)',
+          borderColor: 'rgba(205, 29, 132, 1)',
+          borderWidth: 1,
+          fill: false // Remove filling area for USD dataset
+        }
+        ]
       },
+
       options: {
         scales: {
           yAxes: [{
@@ -79,6 +187,7 @@
       }
     });
   </script>
+
 
   </div>
 

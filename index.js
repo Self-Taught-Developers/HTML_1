@@ -94,11 +94,6 @@ app.get("/Refresh", async (req, res) => {
 
     console.log("ratesEntries[0]:", ratesEntries[0].s);
 
-    //read the data from the second(first is 0, second is 1) record
-    const fifteenthEntry = ratesEntries[0];
-    const fifteenthRate = fifteenthEntry[0];
-
-
     //call the aysnchronous function and save received data into the database
     await saveAPIDataIntoDatabase (db, ratesEntries, dateTimestamp);
     console.log("Done saving API data into database. Moving forward");
@@ -121,17 +116,62 @@ app.get("/Refresh", async (req, res) => {
     {
       for(let i=0; i<strengthData.length; i++)
       {
-        strengthData[i].date = await dateConversion(strengthData[i].date);//change the date format into clean formatting
-       
+        strengthData[i].date = await dateConversion(strengthData[i].date);//change the date format into clean formatting       
       };
     }
 
     // Pass the data to your chart rendering function or template
-    console.log("Strength data at the position 0 is", strengthData[0].date);
+    console.log("Strength data date at the position 0 is", strengthData[0].date);
+
+    // Initialize variables to store data for each symbol
+    let varUSD = [];
+    let varEUR = [];
+    let varGBP = [];
+    let varAUD = [];
+    let varNZD = [];
+    let varCAD = [];
+    let varCHF = [];
+    let varJPY = [];
+    // Add more variables for other symbols if needed
+
+    // Loop through the strengthData array
+    strengthData.forEach(entry => {
+      // Check the symbol of each entry and push it to the respective variable
+      switch (entry.symbol) {
+        case 'USD':
+          varUSD.push(entry);
+          break;
+        case 'EUR':
+          varEUR.push(entry);
+          break;
+        case 'GBP':
+          varGBP.push(entry);
+          break;
+        case 'AUD':
+          varAUD.push(entry);
+          break; 
+        case 'NZD':
+          varNZD.push(entry);
+          break;
+        case 'CAD':
+          varCAD.push(entry);
+          break;
+        case 'CHF':
+          varCHF.push(entry);
+          break;
+        case 'JPY':
+          varJPY.push(entry);
+          break;
+        // Add cases for other symbols if needed
+      }
+    });
+    console.log("Strength data for USD is", varUSD);
+    console.log("Strength data for EUR is", varEUR);
+
 
     let testVar = strengthData;
     //sending data to .ejs file
-    res.render("index.ejs", { testVar });
+    res.render("index.ejs", {varUSD, varEUR, varGBP, varAUD, varNZD, varCAD, varCHF, varJPY});
 
 
     // Close the database connection after the request is processed
@@ -152,6 +192,7 @@ const fetchStrengthData = async (db) => {
 
     // Format the data into an array of objects with 'date' and 'varstrength' properties
     const chartData = strengthData.rows.map(row => ({
+      symbol: row.symbol,
       date: row.date,
       strength: parseFloat(row.varstrength)
     }));
@@ -164,12 +205,19 @@ const fetchStrengthData = async (db) => {
   };
 }
 //------------------------ FUNCTION ---------------------------------//
-//read data about certain symbol and calculate average strength and save it into the database for the chart
-const calculateStrength = async (db) =>{
-  console.log("Entering into strength calculation function")
+//process certain symbol from the database
+const runSymbols = async (db, symbol) => {
   try{
-    const symbol = ["USD/EUR", "USD/GBP", "USD/CAD", "USD/CHF", "USD/JPY", "USD/AUD", "USD/NZD"];
     console.log("Symbol lenght is:", symbol.length);
+
+    let baseCurrency = symbol[0];
+    console.log("Entering function for the symbol: ", baseCurrency);
+    // Split the string by '/' and get the first part
+    baseCurrency = baseCurrency.split('/');
+    baseCurrency = baseCurrency[0]; // Extract the first part
+
+    console.log("Base currency is: ", baseCurrency); 
+
     let dateToday = new Date(); // current date
     let varE;
     let varF = 0;
@@ -199,22 +247,54 @@ const calculateStrength = async (db) =>{
       };
 
     };
-    await db.query("INSERT INTO strength (symbol, varstrength, date) VALUES ($1, $2, $3)", ["USD", varG, dateToday]);
+    await db.query("INSERT INTO strength (symbol, varstrength, date) VALUES ($1, $2, $3)", [baseCurrency, varG, dateToday]);
+
+    return;
+  } catch (error)
+  {
+    console.error("Error reading symbols: ", error.stack);
+    throw error;
+  }
+}
+//------------------------ FUNCTION ---------------------------------//
+//read data about certain symbol and calculate average strength and save it into the database for the chart
+const calculateStrength = async (db) =>{
+  console.log("Entering into strength calculation function")
+  try{
+    const USD = ["USD/EUR", "USD/GBP", "USD/CAD", "USD/CHF", "USD/JPY", "USD/AUD", "USD/NZD"];
+    await runSymbols (db, USD);
+
+    const EUR = ["EUR/USD", "EUR/GBP", "EUR/AUD", "EUR/NZD", "EUR/CAD", "EUR/CHF", "EUR/JPY"];
+    await runSymbols (db, EUR);
+
+    const GBP = ["GBP/AUD", "GBP/NZD", "GBP/USD", "GBP/CAD", "GBP/CHF", "GBP/JPY", "GBP/EUR"];
+    await runSymbols (db, GBP);
+
+    const AUD = ["AUD/NZD", "AUD/USD", "AUD/CAD", "AUD/CHF", "AUD/JPY", "AUD/EUR", "AUD/GBP"];
+    await runSymbols (db, AUD);
+
+    const NZD = ["NZD/USD", "NZD/CHF", "NZD/JPY", "NZD/CAD", "NZD/EUR", "NZD/GBP", "NZD/AUD"];
+    await runSymbols (db, NZD);
+
+    const CAD = ["CAD/CHF", "CAD/JPY", "CAD/EUR", "CAD/GBP", "CAD/AUD", "CAD/NZD", "CAD/USD"];
+    await runSymbols (db, CAD);
+
+    const CHF = ["CHF/JPY", "CHF/EUR", "CHF/GBP", "CHF/AUD", "CHF/NZD", "CHF/USD", "CHF/CAD"];
+    await runSymbols (db, CHF);
+
+    const JPY = ["JPY/EUR", "JPY/GBP", "JPY/AUD", "JPY/NZD", "JPY/USD", "JPY/CAD", "JPY/CHF"];
+    await runSymbols (db, JPY);    
 
     return;
   }catch (error){
     console.error("Error reading/inserting data into strength database:", error.stack);
     throw error;
-  }
-}
-
+  };
+};
 //------------------------ FUNCTION ---------------------------------//
-//read data from the database and filter symbols and make the calculation
-const readDatabaseAndFilter = async (db) =>{
-  console.log("Entering into database for reading and filtering symbols");
+//calculate xx days ago values and save it into the database
+const calculateDaysStrength = async (db, symbol) => {
   try{
-    const symbol = ["USD/EUR", "USD/GBP", "USD/CAD", "USD/CHF", "USD/JPY", "USD/AUD", "USD/NZD"];
-    const test = "USD/CAD";
     console.log("Symbols are: ", symbol);
     // First check what is inside the table
     //const result = await db.query("SELECT * FROM symbol");
@@ -248,7 +328,7 @@ const readDatabaseAndFilter = async (db) =>{
       console.log("varB is: ", varB.rows);
       
       if (varA.rows.length > 0 && varB.rows.length > 0) {
-        console.log(`Result for ${symbol[i]} 50 days ago is:`, varA.rows[0].rate);
+        console.log(`Result for ${symbol[i]} xx days ago is:`, varA.rows[0].rate);
         console.log(`Result for ${symbol[i]} today is:`, varB.rows[0].rate);
 
         let varC = (varB.rows[0].rate - varA.rows[0].rate).toPrecision(2);
@@ -261,7 +341,41 @@ const readDatabaseAndFilter = async (db) =>{
         console.log(`No data found for 50daysago and for today for a symbol: ${symbol[i]}`);
       }
     };
-    
+  }catch(error)
+  {
+    console.error("Error calculating strengh for xx days ago: ", error.stack);
+    throw error;
+  };
+};
+
+//------------------------ FUNCTION ---------------------------------//
+//read data from the database and filter symbols and make the calculation for xx days ago
+const readDatabaseAndFilter = async (db) =>{
+  console.log("Entering into database for reading and filtering symbols");
+  try{
+    const USD = ["USD/EUR", "USD/GBP", "USD/CAD", "USD/CHF", "USD/JPY", "USD/AUD", "USD/NZD"];
+    await calculateDaysStrength (db, USD);
+
+    const EUR = ["EUR/USD", "EUR/GBP", "EUR/AUD", "EUR/NZD", "EUR/CAD", "EUR/CHF", "EUR/JPY"];
+    await calculateDaysStrength (db, EUR);
+
+    const GBP = ["GBP/AUD", "GBP/NZD", "GBP/USD", "GBP/CAD", "GBP/CHF", "GBP/JPY", "GBP/EUR"];
+    await calculateDaysStrength (db, GBP);
+
+    const AUD = ["AUD/NZD", "AUD/USD", "AUD/CAD", "AUD/CHF", "AUD/JPY", "AUD/EUR", "AUD/GBP"];
+    await calculateDaysStrength (db, AUD);
+
+    const NZD = ["NZD/USD", "NZD/CHF", "NZD/JPY", "NZD/CAD", "NZD/EUR", "NZD/GBP", "NZD/AUD"];
+    await calculateDaysStrength (db, NZD);
+
+    const CAD = ["CAD/CHF", "CAD/JPY", "CAD/EUR", "CAD/GBP", "CAD/AUD", "CAD/NZD", "CAD/USD"];
+    await calculateDaysStrength (db, CAD);
+
+    const CHF = ["CHF/JPY", "CHF/EUR", "CHF/GBP", "CHF/AUD", "CHF/NZD", "CHF/USD", "CHF/CAD"];
+    await calculateDaysStrength (db, CHF);
+
+    const JPY = ["JPY/EUR", "JPY/GBP", "JPY/AUD", "JPY/NZD", "JPY/USD", "JPY/CAD", "JPY/CHF"];
+    await calculateDaysStrength (db, JPY); 
 
     return;
   }catch (error) {
