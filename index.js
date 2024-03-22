@@ -46,9 +46,9 @@ app.get("/Refresh", async (req, res) => {
     console.log("Connected to the database.");
 
     //get raw data from the API endpoint
-    //const result = await axios.get(API_URL + yourAPIKey);
+    const result = await axios.get(API_URL + yourAPIKey);
     //test
-     const result = {
+    /*  const result = {
       status: true,
       code: 200,
       msg: "Successfully",
@@ -71,26 +71,26 @@ app.get("/Refresh", async (req, res) => {
         server_time: "2024-03-14 05:51:55 UTC",
         credit_count: 20
       }
-    };   
+    };    */
      
     
-    //console.log("Data from the JSON: ", result.data.info.server_time);
+    console.log("Data from the JSON: ", result.data.info.server_time);
     //test
-    console.log("Data from the JSON: ", result.info.server_time);
+    //console.log("Data from the JSON: ", result.info.server_time);
 
     //check the date form the JSON from the fcsapi
-    //const apiDate = result.data.info.server_time;
+    const apiDate = result.data.info.server_time;
     //test
-    const apiDate = result.info.server_time;
+    //const apiDate = result.info.server_time;
 
     const dateTimestamp = await dateConversion(apiDate);
     //const dateTimestamp = apiDate;
     console.log("formattedDate returned:", dateTimestamp);
     
     //save data from the JSON file into object variable
-    //const ratesEntries = result.data.response;
+    const ratesEntries = result.data.response;
     //test
-    const ratesEntries = result.response;
+    //const ratesEntries = result.response;
 
     console.log("ratesEntries[0]:", ratesEntries[0].s);
 
@@ -103,7 +103,7 @@ app.get("/Refresh", async (req, res) => {
     console.log("Done saving calculated data into database. Moving forward");
 
     //read the data from the database for certain symbols, like USD, and then calculate the strength for the USD and save the strength into the database - third table
-    await calculateStrength (db);
+    await calculateStrength (db, dateTimestamp);
     console.log("Calculation of a strength for certain symbols is done. Moving forward");
 
     // Call the asynchronous function and get the fetched data from the Database
@@ -206,7 +206,7 @@ const fetchStrengthData = async (db) => {
 }
 //------------------------ FUNCTION ---------------------------------//
 //process certain symbol from the database
-const runSymbols = async (db, symbol) => {
+const runSymbols = async (db, symbol, dateTimestamp) => {
   try{
     console.log("Symbol lenght is:", symbol.length);
 
@@ -218,38 +218,71 @@ const runSymbols = async (db, symbol) => {
 
     console.log("Base currency is: ", baseCurrency); 
 
-    let dateToday = new Date(); // current date
-    let varE;
-    let varF = 0;
-    let varH = 0;
-    let varG = 0;
-    for(let i=0; i<symbol.length; i++)
+
+    //first read from the database is there something inside
+    let varB = await db.query("SELECT * FROM strength");
+    console.log("Current data length inside the TABLE Strength is: ", varB.rows.length);
+
+
+    //function to calculate how many records in the database are the same as the current date
+    let dateInDatabase;
+    if(varB.rows.length > 0)
     {
-      console.log("Entering into for loop:");
-      varE = await db.query("SELECT * FROM calculation WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday.toISOString()]);
-
-      console.log("Current symbol is: ", symbol[i]);
-      console.log("Current i is: ", i);
-      console.log("Current varE length is:", varE.rows.length);
-
-      if (varE.rows.length > 0)
+      dateInDatabase = await checkDateRecords(varB, dateTimestamp);
+    }
+    //console.log("symbol, basecurrency, dateInDatabase", varB.rows.symbol, baseCurrency, dateInDatabase);
+    let varZ =0;
+    //check is there a symbol inside the database strength. If there is record how many of there are
+    for(let i=0; i<varB.rows.length; i++)
+    {
+      console.log("varB.rows[i].symbol, baseCurrency, varZ ",varB.rows[i].symbol, baseCurrency, varZ);
+      if(varB.rows[i].symbol === baseCurrency)
       {
-        console.log("Current varE.rows[i].vard is: ", varE.rows[0].vard);
-        varF += varE.rows[0].vard; //use only first row because there should be only one row for the current date for this symbol and add it to this var that contains all values from other symbols
-        console.log("varE length is:", varE.rows.length);
-        varH++;
-        console.log("Sum of strength is:", varF);
-        varG = varF/varH;
-        console.log("Average strength is:", varG);
-        console.log("varH is:", varH);
-      }else {
-        console.log(`No data found for ${symbol[i]}`);
-      };
-
+        varZ++;
+        console.log("varZ ",varZ);
+      }
     };
-    await db.query("INSERT INTO strength (symbol, varstrength, date) VALUES ($1, $2, $3)", [baseCurrency, varG, dateToday]);
+    console.log("dateInDatabase, varZ", dateInDatabase, varZ);
+    if(dateInDatabase && varZ)
+    {
+      console.log("Not saving new data into database because there is record inside TABLE Strength with current date");
+      return;
+    }else{
+      let dateToday = new Date(); // current date
+      let varE;
+      let varF = 0;
+      let varH = 0;
+      let varG = 0;
+      for(let i=0; i<symbol.length; i++)
+      {
+        console.log("Entering into for loop:");
+        varE = await db.query("SELECT * FROM calculation WHERE (symbol, date) = ($1, $2)", [symbol[i], dateToday.toISOString()]);
 
-    return;
+        console.log("Current symbol is: ", symbol[i]);
+        console.log("Current i is: ", i);
+        console.log("Current varE length is:", varE.rows.length);
+
+        if (varE.rows.length > 0)
+        {
+          console.log("Current varE.rows[i].vard is: ", varE.rows[0].vard);
+          varF += varE.rows[0].vard; //use only first row because there should be only one row for the current date for this symbol and add it to this var that contains all values from other symbols
+          console.log("varE length is:", varE.rows.length);
+          varH++;
+          console.log("Sum of strength is:", varF);
+          varG = varF/varH;
+          console.log("Average strength is:", varG);
+          console.log("varH is:", varH);
+
+          
+        }else {
+          console.log(`No data found for ${symbol[i]}`);
+        };
+
+      };
+      await db.query("INSERT INTO strength (symbol, varstrength, date) VALUES ($1, $2, $3)", [baseCurrency, varG, dateToday]);
+
+      return;
+    }
   } catch (error)
   {
     console.error("Error reading symbols: ", error.stack);
@@ -258,32 +291,32 @@ const runSymbols = async (db, symbol) => {
 }
 //------------------------ FUNCTION ---------------------------------//
 //read data about certain symbol and calculate average strength and save it into the database for the chart
-const calculateStrength = async (db) =>{
+const calculateStrength = async (db, dateTimestamp) =>{
   console.log("Entering into strength calculation function")
   try{
     const USD = ["USD/EUR", "USD/GBP", "USD/CAD", "USD/CHF", "USD/JPY", "USD/AUD", "USD/NZD"];
-    await runSymbols (db, USD);
+    await runSymbols (db, USD, dateTimestamp);
 
     const EUR = ["EUR/USD", "EUR/GBP", "EUR/AUD", "EUR/NZD", "EUR/CAD", "EUR/CHF", "EUR/JPY"];
-    await runSymbols (db, EUR);
+    await runSymbols (db, EUR, dateTimestamp);
 
     const GBP = ["GBP/AUD", "GBP/NZD", "GBP/USD", "GBP/CAD", "GBP/CHF", "GBP/JPY", "GBP/EUR"];
-    await runSymbols (db, GBP);
+    await runSymbols (db, GBP, dateTimestamp);
 
     const AUD = ["AUD/NZD", "AUD/USD", "AUD/CAD", "AUD/CHF", "AUD/JPY", "AUD/EUR", "AUD/GBP"];
-    await runSymbols (db, AUD);
+    await runSymbols (db, AUD, dateTimestamp);
 
     const NZD = ["NZD/USD", "NZD/CHF", "NZD/JPY", "NZD/CAD", "NZD/EUR", "NZD/GBP", "NZD/AUD"];
-    await runSymbols (db, NZD);
+    await runSymbols (db, NZD, dateTimestamp);
 
     const CAD = ["CAD/CHF", "CAD/JPY", "CAD/EUR", "CAD/GBP", "CAD/AUD", "CAD/NZD", "CAD/USD"];
-    await runSymbols (db, CAD);
+    await runSymbols (db, CAD, dateTimestamp);
 
     const CHF = ["CHF/JPY", "CHF/EUR", "CHF/GBP", "CHF/AUD", "CHF/NZD", "CHF/USD", "CHF/CAD"];
-    await runSymbols (db, CHF);
+    await runSymbols (db, CHF, dateTimestamp);
 
     const JPY = ["JPY/EUR", "JPY/GBP", "JPY/AUD", "JPY/NZD", "JPY/USD", "JPY/CAD", "JPY/CHF"];
-    await runSymbols (db, JPY);    
+    await runSymbols (db, JPY, dateTimestamp);    
 
     return;
   }catch (error){
@@ -303,7 +336,7 @@ const calculateDaysStrength = async (db, symbol) => {
     let dateToday = new Date();//what is current date
     console.log("Today is non converted:", dateToday);
 
-    const daysAgo = 1; //how many days ago?
+    const daysAgo = 18; //how many days ago?
     //dateDaysAgo = await daysAgoConversion(daysAgo, dateToday);//get me the date which was xx days ago
     let date50days = new Date(dateToday);
     date50days.setDate(dateToday.getDate()-daysAgo);
@@ -338,7 +371,7 @@ const calculateDaysStrength = async (db, symbol) => {
         await db.query("INSERT INTO calculation (symbol, varc, vard, date) VALUES ($1, $2, $3, $4)", [symbol[i], varC, varD, dateToday]);
 
       } else {
-        console.log(`No data found for 50daysago and for today for a symbol: ${symbol[i]}`);
+        console.log(`No data found for ${date50days} and for today for a symbol: ${symbol[i]}`);
       }
     };
   }catch(error)
