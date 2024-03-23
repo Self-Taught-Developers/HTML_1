@@ -393,11 +393,11 @@ const calculateDaysStrength = async (db, symbol) => {
 
         
         if (varA.rows.length > 0 && varB.rows.length > 0) {
-          //console.log(`Result for ${symbol[i]} xx days ago is:`, varA.rows[0].rate);
-          //console.log(`Result for ${symbol[i]} today is:`, varB.rows[0].rate);
+          //console.log(`Result for ${symbol[i]} xx days ago is:`, varA.rows[0].closePrice);
+          //console.log(`Result for ${symbol[i]} today is:`, varB.rows[0].closePrice);
 
-          let varC = (varB.rows[0].rate - varA.rows[0].rate).toPrecision(2);
-          let varD = ((varC / varA.rows[0].rate) * 100).toPrecision(2);
+          let varC = (varB.rows[0].closePrice - varA.rows[0].closePrice).toPrecision(2);
+          let varD = ((varC / varA.rows[0].closePrice) * 100).toPrecision(2);
           console.log(`Strength for ${symbol[i]} is: ${varD}%`);
           //save this into second table for chart analysis later on
           await db.query("INSERT INTO calculation (symbol, varc, vard, date) VALUES ($1, $2, $3, $4)", [symbol[i], varC, varD, dateToday]);
@@ -480,7 +480,7 @@ const saveAPIDataIntoDatabase = async (db, ratesEntries, dateTimestamp) => {
       console.log("Saving data into database SYMBOL because there is no record with today date");
       for(let i=0; i<ratesEntries.length; i++)
       {
-        await db.query("INSERT INTO symbol (symbol, rate, date) VALUES ($1, $2, $3)", [ratesEntries[i].s, ratesEntries[i].c, dateTimestamp]);
+        await db.query("INSERT INTO symbol (symbol, closePrice, date, openPrice, highPrice, lowPrice) VALUES ($1, $2, $3)", [ratesEntries[i].s, ratesEntries[i].c, dateTimestamp, ratesEntries[i].o, ratesEntries[i].h, ratesEntries[i].l]);
       };
     };
     return;//return back from the function
