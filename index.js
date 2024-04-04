@@ -192,15 +192,19 @@ const saveAPIDataIntoDatabase = async (db, ratesEntries, dateTimestamp) => {
   try{
     
     let dateToday = new Date();//what is current date
+    let dateInDatabase = 0;
     //first read from the database is there something inside
     let varB = await db.query("SELECT * FROM symbol");
 
     //function to calculate how many records in the database are the same as the current date
-    let dateInDatabase = await checkDateRecords(varB, dateTimestamp);
+    if(varB.rows.length > 0)
+    {
+      dateInDatabase = await checkDateRecords(varB, dateTimestamp);
+    }
 
     if(dateInDatabase)
     {
-      console.log("Not saving new data FROM API into database SYMBOL because there is record with current date");
+      console.log("Not saving new data FROM API into database SYMBOL because there is a record with current date");
       return;
     }else{
       //if there is no date that is equal today date then proceed and save new data into database
