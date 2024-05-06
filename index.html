@@ -9,7 +9,15 @@
 	<link rel="icon" href="Images/STDIcon.png" type="image/x-icon">
 	<title>Welcome</title>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K7X2KQRY1K"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() { dataLayer.push(arguments); }
+	gtag('js', new Date());
 
+	gtag('config', 'G-K7X2KQRY1K');
+</script>
 
 
 <body>
@@ -611,6 +619,8 @@
 										pointed domain to this droplet.
 										Now the website is live and you can access it if you want to see the progress -
 										<a href="https://currenlyzer.com/">currency analyzer</a>
+										This was the reason why I had no changes in the code on the Github because I was
+										not working so much on the code, but solving the issue with the domain.
 									</p>
 									<p>
 										The issues I have experienced while trying to get the live website are as
@@ -647,6 +657,31 @@
 										These kind of issues are small ones, but until I have experienced them I did not
 										they exist and they could happen when they happened. This is a great lesson.
 									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
+						<!--This is the start of a section-->
+						<li>
+							6.5.2024
+							<ul>
+								<li>
+									<p>
+										I have tried to move current code from the local PC to live website. I had an
+										issue that the database table columns have changed so I needed to add new
+										columns. I have exported from local database and uploaded over FielZilla to
+										linux server. Then I have deleted old table and imported new data into new
+										table. Becuase there were issues with ID column in the old database. So it was
+										better to load new data into database.
+									</p>
+									<p>
+										Then I have uploaded new code files and now I have an issue. The code does not
+										work. Because charts do not show. For now I see that the code does not load .js
+										files for charts. Then I need to figure our what else do not work. The issue
+										could ne ebcause of a path location of .js files on the server which could be
+										slightly different compared to location on the local machine.
+									</p>
+
 								</li>
 							</ul>
 						</li>
