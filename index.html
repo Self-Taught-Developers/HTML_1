@@ -678,8 +678,71 @@
 										Then I have uploaded new code files and now I have an issue. The code does not
 										work. Because charts do not show. For now I see that the code does not load .js
 										files for charts. Then I need to figure our what else do not work. The issue
-										could ne ebcause of a path location of .js files on the server which could be
+										could be because of a path location of .js files on the server which could be
 										slightly different compared to location on the local machine.
+									</p>
+
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
+						<!--This is the start of a section-->
+						<li>
+							7.5.2024
+							<ul>
+								<li>
+									<p>
+										I have changed the code on the linux and return to old version so style and .js
+										files are inside .ejs file. Until I have more time to figure out what is path
+										needed for files to work I will continue with other work. Later on I will solve
+										this issue.
+									<p>
+										New problem has appeared. When I have uploaded database from local PC to linus
+										server I have an issue with saving data into the database. there is an issue
+										with ID of a primary key. And I cannot understand why. I was checking the code
+										and it runs ok until it reaches saving data into database. It returns error that
+										primary ID is already in the database. It points me that there are already
+										records in the database.
+									</p>
+									<p>
+										I have tried with CHAT GPT to find an error, but I could not find it easily.
+										Then I have found out that the primary ID goes from 1 on new database even there
+										are records I have uploadded from local PC. This means primary ID for symbol
+										should continue from the current one. THen I have deleted all symbol database
+										and allowed it to start from current day with ID from beginning. I could not
+										waste time finding solution. I have tried to reset ID to start from the current
+										number that is in the database. I have changed that, but for some reason it
+										still the database did not want to increment primary ID. Maybe I should
+										increment and reset to several number above from the current number that is
+										inside the database? This is something for testing later on.
+									</p>
+									<p>
+										for now the program is running and showing the data. I will work on local
+										version to move forward with the HTML and CSS and adding more functionalites to
+										the charts.
+									</p>
+
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
+						<!--This is the start of a section-->
+						<li>
+							8.5.2024
+							<ul>
+								<li>
+									<p>
+										I have added content to the main page from the previous template I have prepared
+										for CSM page. But, now I have more than CSM chart so I will put more content
+										about all charts.
+
+									</p>
+									<p>
+										I have an issue that when I refresh page I call the API and lose credits. So I
+										will need to change the code in a way when I call API once per day I do not call
+										it again. This way I will limit APi requests and save credits. This will be done
+										by cehecking the database is there current date inside the records. If there is
+										then I will not call the API.
 									</p>
 
 								</li>
