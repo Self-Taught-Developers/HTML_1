@@ -785,6 +785,61 @@
 							</ul>
 						</li>
 						<!--This is the end of a section-->
+						<!--This is the start of a section-->
+						<li>
+							10.5.2024
+							<ul>
+								<li>
+									<p>
+										I have added drop down menu with select tag. I have added several options inside
+										and I have used action = submit to send the data over POST request. This was on
+										the frontend part.
+
+									</p>
+									<p>
+										On the backend I have written app.post express part to read the /submit POST
+										request and to take the variable from the front end.
+									</p>
+									<p>
+										Issues I have experienced were: I did not know how to pass the variable from the
+										select drop down menu. Then I have read some of the stackoverflow answers, but
+										it was not so clear. Then I have watched Angela Yu course on Udemy and it helped
+										immediatelly. There is POST request explanation over input fields to send the
+										data to backend. And this helpe me understand that i neeed POST request with
+										name field inside the select form. So I have used that video and example and
+										written frontend and backend of the code.
+									</p>
+									<p>
+										Second issue I had that I did not pass varialbe from the frontend to backend
+										correctly. The issue was that on the backend when I have used console.log to see
+										what is stored inside the variable comming from the frontend I have got
+										undefined. So the issue was passing the data from frontend. CHATGPT has helped
+										me find the error. It was the name attribute which I have put on the wrong
+										place. I have put it into the option variable inside the select form. Instead, I
+										needed to put the name value in the select part of the code. So the select form
+										when I choose one of the option, that select form will send over the name
+										attribute the value to the backend. When I have done like that the issue was
+										solved.
+									</p>
+									<p>
+										Next issue now I have is how to call the database with new variable I have sent
+										from the frontend. Because I have current code written in the /get part of the
+										code. ANd to return the desired values from the database after POST request has
+										been called I need to call the database. So I need to change the code to watch
+										/get and /post request and then call the same database with same function and
+										then res.render .ejs file to frontend. But here I need to see how to call both
+										functions, .get and .post to do the same database reading and rendering .ejs
+										file. I have an idea, but it will require testing to see how it works. For now I
+										am thinking to call the database function outside of these two .post and .get
+										functions to see how it behaves. This way I could call database funtion from the
+										.get and from the .post request. But then res.render needs to be sent also
+										separaterly or call the funtion each time I need to res.render will it be from
+										.get or from the ./post functin. It should do the same stuff.
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
 					</ul>
 				</li>
 			</ul>
