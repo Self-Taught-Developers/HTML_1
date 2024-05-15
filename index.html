@@ -840,6 +840,91 @@
 							</ul>
 						</li>
 						<!--This is the end of a section-->
+						<!--This is the start of a section-->
+						<li>
+							13.5.2024
+							<ul>
+								<li>
+									<p>
+										<strong>IDEA</strong> - I want to send data from the frontend to the backend
+										over
+										POST request.
+
+									</p>
+									<p>
+										What I have done - I have created a backend code to read the 2 variables that
+										are sent over POST request.
+									</p>
+									<p>
+										PROBLEM - How to solve reading database data based on the frontend variables
+										sent to backend. The idea is to show certain values on the chart. How to call
+										database and send data to
+										frontend while I already have another database call and res.render that send the
+										data to frontend. I need to have two res.renders to send information to
+										frontend. This is currently making me an error on the frontend saying I have
+										undefined variables.
+										<br>
+										I have variables that are used when the POST request has been sent and backend
+										sends data to frontend. But when using /get request I do not send data to those
+										2 variables which makes an error that those variables are not defined. So I need
+										to find a solution how to use 2 variables on the frontend for 2 different cases,
+										with /get and POST request from the frontend.
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
+						<!--This is the start of a section-->
+						<li>
+							15.5.2024
+							<ul>
+								<li>
+									<p>
+										<strong>IDEA</strong> - I want to send data from the frontend to the backend
+										over
+										POST request.
+
+									</p>
+									<p>
+										What I have done - I have managed to send the data from the database to the
+										front end. I have done that by using variables, global defined, and fill them in
+										the POST request and at the end of the POST request I have called res.render
+										/GET request.
+										<br>
+										Inside GET request I have called a function to use database data based on the 2
+										variables I have got from the front end. Then I have passed the data to the
+										front end at the end of the /GET function. This way I have used 2 variables
+										globaly in /POST and then in /GET request.
+									</p>
+									<p>
+										PROBLEM - Currently the problem is that when I click OK on the front end to send
+										/POST request in the backend I run /POST method and then /GET method. Whivch
+										means the code does the whole process of /GET method even I do not need the
+										whole functions inside /GET. This means I refresh the whole web page which takes
+										time. Which is not a good solution. But this way the process works until I find
+										another solution how to solve this.
+										<br>
+										The next goal will be to create another chart next to this one with correlation.
+										That second chart will show what is strength percentage change from yesterday
+										compared to today. This way I will see current price change from yesterday, but
+										also the strengh change. THe Strength change will be simple price comparison
+										with the current price. But, at the end of a day I will have price comparison
+										between two days.
+										<br>
+										Then When I compared two currencies in price change and in strength change I
+										will see how they are moving compared to each other. If there is a correlation
+										in price and strength and one of the currencies is lagging then this could be
+										used in trading advantage.
+									</p>
+									<p>
+										Use data API every hour to see better details of a price movement during the
+										day. This will give better insight about the symbols how they are moving
+										compared to each other. Closer look will give more details about correlation.
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
 					</ul>
 				</li>
 			</ul>
