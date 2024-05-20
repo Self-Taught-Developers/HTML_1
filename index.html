@@ -978,6 +978,63 @@
 							</ul>
 						</li>
 						<!--This is the end of a section-->
+						<li>
+							17.5.2024
+							<ul>
+								<li>
+									<p>
+										<strong>IDEA</strong> - Save price change into database on the API request
+
+									</p>
+
+									<p>
+										PROBLEM - When to save price change? At the API call or somewhere later with
+										another function
+									</p>
+									<p>
+										What I have done - Add percentage change for the price compared to the yesterday
+										change. This was done by adding the code inside the function when saving data
+										into the database. I did not want to save it later because I can do it right on
+										the new data entry.
+									</p>
+									<p>
+										NEXT - solve the issue with the code when pulling data from the database to
+										calculate price change
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
+						<!--This is the end of a section-->
+						<li>
+							20.5.2024
+							<ul>
+								<li>
+									<p>
+										<strong>IDEA</strong> - Save price change into database on the API request
+
+									</p>
+
+									<p>
+										PROBLEM - Inside the code there is an error that I do not have data about the
+										closeprice from the database.
+									</p>
+									<p>
+										What I have done - The error was because the data that was taken from the
+										database when reading closeprice to calculate the price change it did not had a
+										database record when I have used FOR loop more than the "".length" is for the
+										dataset. When I have added if(xxx.length > 0) for the dataset the error was not
+										present. And it is clear that when there is no record with the specific symbol
+										inside the database it will not have closeprice from the database pulled.
+									</p>
+									<p>
+										NEXT - wait for the data to populate inside the database and see how the chart
+										works now.
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
 					</ul>
 				</li>
 			</ul>
