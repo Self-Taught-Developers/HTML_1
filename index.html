@@ -1080,6 +1080,48 @@
 							</ul>
 						</li>
 						<!--This is the end of a section-->
+						<!--This is the end of a section-->
+						<li>
+							21.5.2024
+							<ul>
+								<li>
+									<p>
+										<strong>IDEA</strong> - send a request for pip range symbol to show the data on
+										the chart
+									</p>
+									<p>
+										What I have done - I have created a dropdown menu with symbols that a user can
+										select. Then I have send the POST request to the backend with a symbol that was
+										selected. In the backend I have created a function to read POST request for pip
+										range symbol. Even I have one POST request I have created new one so I can solve
+										the issue with 2 variables that are not sent to the backend when requesting POST
+										with pip range symbol. Currently the code works ok and I have required symbol in
+										the backend.
+									</p>
+									<p>
+										PROBLEM - I have send POST request with pip range symbol in the POST request
+										that I have used to send POST request for the 2 symbols for corellation chart.
+										When running the code I had an issue that reading 0 as a variable of these 2
+										symbols. And the reason was that I did not sent 2 variable for correlation chart
+										but only for the pip range chart. I needed to solve this issue when requesting 2
+										different POST request or at least one POST request but with several different
+										variables which sometimes are sent to the backend, but sometimes they are not
+										sent.
+									</p>
+									<p>
+										I do not know currently is it better to have 2 POST request or I should only
+										have one per webpage. WHat is the best practice when many users use the same
+										webpage. It is faster, better to have one or more POST request is something that
+										I need to learn and test what is faster and better for a user experience
+									</p>
+									<p>
+										NEXT - I need to make backend part of the code to process a symbol request for
+										pip range chart.
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
 					</ul>
 				</li>
 			</ul>
