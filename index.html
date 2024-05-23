@@ -1122,6 +1122,44 @@
 							</ul>
 						</li>
 						<!--This is the end of a section-->
+						<!--This is the end of a section-->
+						<li>
+							23.5.2024
+							<ul>
+								<li>
+									<p>
+										<strong>IDEA</strong> - send a request for pip range symbol to show the data on
+										the chart
+									</p>
+									<p>
+										What I have done - created the backend code to read the database for pip range
+										based on the user selection on the frontend. Data is sent to the frontend and
+										shows on the chart
+									</p>
+									<p>
+										PROBLEM - no issues were faced today regarding the code. But I should improve
+										the details for ceratin symbols because some symbols do not have 4 or 5 digits,
+										but have 2 o3 like JPY pairs. And for example XAUUSD has different counting for
+										pips compared to EURUSD.
+									</p>
+
+									<p>
+										NEXT - Solve the calculation for certain symbol to be precise like in the case
+										of XAUUSD or XAGUSD.
+										<br>
+										I am thinking of saving pip range details inside the table inside
+										database so I ahve the archive and allow the user to select pip range for
+										specific period of time instead of having the pip range for all dates from the
+										database as the currently is working.
+										Additionaly I could add more timeframes into the database for more details. But
+										for this I would need the data from API for all timeframes. I am also thinking
+										to fetch the data from the MT4 running on the server and send the data by myself
+										instead of paying for API access on other website.
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
 					</ul>
 				</li>
 			</ul>
