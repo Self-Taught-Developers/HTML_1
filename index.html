@@ -1245,6 +1245,41 @@
 							</ul>
 						</li>
 						<!--This is the end of a section-->
+						<!--This is the end of a section-->
+						<li>
+							28.5.2024
+							<ul>
+								<li>
+									<p>
+										<strong>IDEA</strong> - solve the idea how to save data into the database every
+										hour so I have candle close on each hour
+									</p>
+
+									<p>
+										What I have done - got idea to save every hour the data from the API for certain
+										symbols. I am not saving all symbols, but only specific that is needed to show
+										them on the front end chart
+									</p>
+									<p>
+										PROBLEM - I had an issue with reading API data. First symbol, that was EUR/USD
+										with the ID 1 was not read. For some reason I could not find what it is not
+										read. So without EUR/USD the database was not complete. EUR/USD was at the first
+										place when requesting from API. And it was a first record from API response.
+										WHen I have added another symbol on the first place the issue was gone. BUt the
+										that another symbol was read from the API. So it is not clear why EUR/USD is
+										read ok with another symbol, but before EUR/USD was not read. I will leave it as
+										it is now.
+									</p>
+
+									<p>
+										NEXT - continue working on saving data into database with different timeframes.
+										I need to solve the code that works even there is a record with current date in
+										the database. I need to check the database is there a record with current hour.
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
 					</ul>
 				</li>
 			</ul>
