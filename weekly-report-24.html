@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Self-Taught Developer Journey With Step by Step Taken to become a programmer">
+    <meta name="Author" content="Frano Grgić">
+    <link rel="icon" href="Images/STDIcon.png" type="image/x-icon">
+    <title>Welcome</title>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K7X2KQRY1K"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-K7X2KQRY1K');
+</script>
+
+
+<body>
+    <!--adding header section into the web page-->
+    <header>
+        <h1>Self-Taught Developer Journey - Weekly Report 24</h1>
+
+        <p>
+            Here is a weekly report what I have done and what problems I have experienced. How I have solved those
+            issue.
+        </p>
+
+        <!--here I am making quick links inside the html page to jump to desired section by using section ID. For that it is used nav tag that emphasize that inside we have navigation links-->
+        <nav>
+
+        </nav>
+        <!--adding image as a logo for the website-->
+        <figure>
+            <img src="Images/STDIcon.png" alt="Self-Taught Developer icon" title="STD icon image" height="50" width="50"
+                loading="lazy">
+            <!--adding figcaption which is a text below the image to explain what this image is about-->
+            <figcaption>Self-Taught Developer Icon adding</figcaption>
+        </figure>
+        <div style="display:flex inline-block ">
+            <a href="/About.html">Previous</a>
+            <a href="/About.html">Next</a>
+            <br>
+            <a href="/index.html">Home</a>
+        </div>
+    </header>
+
+
+    <!--adding main section into the web page-->
+    <main>
+        <!--hr or horizontal rule is a line that is used to divide the section on the page-->
+        <hr>
+        <section id="HTML_Learning">
+            <h2>Weekly Report - Week 24</h2>
+            <ul>
+                <!--This is the end of a section-->
+                <li>
+                    3.6.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - make a request from the frontend part for different time
+                                frame for the currency strength
+                            </p>
+
+                            <p>
+                                What I have done - added front end part with a drop down menu to select H1, H4,
+                                D1, W1 and MN time frame. And send the data to the backend. AI have added
+                                backend part to receive the variable and send the variable into the neccessary
+                                function.
+                            </p>
+                            <p>
+                                PROBLEM - There was no too much issues.
+                            </p>
+
+                            <p>
+                                NEXT - Addid the part of the code to read the data from the database based on
+                                the time frame select on the frontend
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
+                    4.6.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - solve the backend part to read the database data for
+                                certain time frame select on the front end
+                            </p>
+
+                            <p>
+                                What I have done - added SQL code to read the database based on the date and
+                                hour. The data is pulled with last 8 records for each symbol.
+                            </p>
+                            <p>
+                                PROBLEM - The issue here is that I have database populated with the data for
+                                strength on the H1 time frame. For other timeframes I do not have data saved.
+                                Now I need to solve the issue how to save data for different time frames. Which
+                                means I need to add more tables inside the database.
+                            </p>
+
+                            <p>
+                                NEXT - I am thinking should I add more tables inside the database for each time
+                                frame, or should I make the calculation from the symbol database on request form
+                                the front end. Third solution would be to have variable ready in memory with
+                                calculated data for the basic request for each time frame. So when the user
+                                calls the data it will be read from the variable. For now I am more inclined to
+                                save it into database and later on I can add temporary variable for saving the
+                                data to speed up the reading data and send it to the front end on the request.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+            </ul>
+        </section>
+        <hr>
+
+
+    </main>
+    <!--adding footer section into the web page-->
+    <footer>
+        <p>
+            <a href="#">Back to the top</a>
+        </p>
+        <hr>
+        <p>
+            &lt;&lt;&lt; &copy; <a href="/About.html">Frano Grgić</a> &gt;&gt;&gt;
+        </p>
+        <p>Back to <a href="/">Home</a></p>
+    </footer>
+</body>
+
+</html>
