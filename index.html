@@ -1311,6 +1311,68 @@
 							</ul>
 						</li>
 						<!--This is the end of a section-->
+						<!--This is the end of a section-->
+						<li>
+							3.6.2024
+							<ul>
+								<li>
+									<p>
+										<strong>IDEA</strong> - make a request from the frontend part for different time
+										frame for the currency strength
+									</p>
+
+									<p>
+										What I have done - added front end part with a drop down menu to select H1, H4,
+										D1, W1 and MN time frame. And send the data to the backend. AI have added
+										backend part to receive the variable and send the variable into the neccessary
+										function.
+									</p>
+									<p>
+										PROBLEM - There was no too much issues.
+									</p>
+
+									<p>
+										NEXT - Addid the part of the code to read the data from the database based on
+										the time frame select on the frontend
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
+						<!--This is the end of a section-->
+						<li>
+							4.6.2024
+							<ul>
+								<li>
+									<p>
+										<strong>IDEA</strong> - solve the backend part to read the database data for
+										certain time frame select on the front end
+									</p>
+
+									<p>
+										What I have done - added SQL code to read the database based on the date and
+										hour. The data is pulled with last 8 records for each symbol.
+									</p>
+									<p>
+										PROBLEM - The issue here is that I have database populated with the data for
+										strength on the H1 time frame. For other timeframes I do not have data saved.
+										Now I need to solve the issue how to save data for different time frames. Which
+										means I need to add more tables inside the database.
+									</p>
+
+									<p>
+										NEXT - I am thinking should I add more tables inside the database for each time
+										frame, or should I make the calculation from the symbol database on request form
+										the front end. Third solution would be to have variable ready in memory with
+										calculated data for the basic request for each time frame. So when the user
+										calls the data it will be read from the variable. For now I am more inclined to
+										save it into database and later on I can add temporary variable for saving the
+										data to speed up the reading data and send it to the front end on the request.
+									</p>
+								</li>
+							</ul>
+						</li>
+						<!--This is the end of a section-->
 					</ul>
 				</li>
 			</ul>
