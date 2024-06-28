@@ -43,7 +43,7 @@
         </figure>
         <div>
             <a href="/About.html">Previous</a>
-            <a href="/About.html">Next</a>
+            <a href="/weekly-report-28.html">Next</a>
             <br>
             <a href="/index.html">Home</a>
         </div>
@@ -59,27 +59,28 @@
             <ul>
                 <!--This is the end of a section-->
                 <li>
-                    27.6.2024
+                    11.6.2024
                     <ul>
                         <li>
                             <p>
-                                <strong>IDEA</strong> - change the code for the bar chart to have better chart for the
-                                users. And to do that I wanted to show only 1 value for each currency insted of showing
-                                all values, like 10 values on the bar chart.
+                                <strong>IDEA</strong> - add the code for D1 and W1 calculation of a stregth. Populate
+                                the data after the calculation is been done
                             </p>
 
                             <p>
-                                What I have done - add the code to get the last result from each currency and to move
-                                all values to start from 0 insteady having their real values.
+                                What I have done - add part of the code for H4+D1+W1 calculation for the strength and
+                                save the data into database
                             </p>
                             <p>
-                                PROBLEM - I had no issues creating the code. I did not finish the whole code
+                                PROBLEM - I had no issues creating the code for the strength calculation
                             </p>
 
                             <p>
-                                NEXT - I need to continue working on the code to finish this part to show only one value
-                                for each currency so I have bar chart with only one value of each currency. AFter that I
-                                will need to modify the front part of the code to have much better bar chart looking
+                                NEXT - Now I need to populate the data for a week or two so I can see does the data
+                                populates and calculates correctly. meanwhile I will try to add more code for the
+                                selection of the chart type on the front end and to allow the user to select time frame
+                                with certain dates for the strength. And allow to have bar chart. Add maximum of 24
+                                records on the chart or less depending how many is ok for reading
                             </p>
                         </li>
                     </ul>
@@ -87,19 +88,191 @@
                 <!--This is the end of a section-->
                 <!--This is the end of a section-->
                 <li>
-                    26.6.2024
+                    10.6.2024
                     <ul>
                         <li>
                             <p>
-                                <strong>INFO</strong> - I was on a vacation a week before so I did not work on the
-                                project. I started this week but I have spent time thinking how to make modifications on
-                                the bar chart in order to show information on the bar chart much better than it is now.
+                                <strong>IDEA</strong> - add the code for D1 and W1 calculation. Create new database
+                                TABLES for
+                                other time frames
+                            </p>
+
+                            <p>
+                                What I have done - add part of the code for D1+W1 calculation based on the hour. Started
+                                to
+                                create the code for the other time frames
+                            </p>
+                            <p>
+                                PROBLEM - I have problem creating a solution that will work 100%. When to use the data
+                                for Daily, Weekly and Monthly calculation. What is the best approach to stat
+                                calculation. How to read precise date in the past based on the time frame needed.
+                            </p>
+
+                            <p>
+                                NEXT - So I have started to create one step by step and see how it goes. Test it and fix
+                                it. Then improve and move forward with implementation based on the condition for
+                                different time frame. Now I need to create the code for each time frame to save the data
+                                into database after calculation is done.
                             </p>
                         </li>
                     </ul>
                 </li>
                 <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
+                    7.6.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - add the code for H4 calculation. Create new database TABLES for
+                                other time frames
+                            </p>
 
+                            <p>
+                                What I have done - add part of the code for H4 calculation based on the hour. Started to
+                                create the code for the other time frames
+                            </p>
+                            <p>
+                                PROBLEM - I have problem creating a solution that will work 100%. When to use the data
+                                for Daily, Weekly and Monthly calculation. What is the best approach to stat
+                                calculation. How to read precise date in the past based on the time frame needed.
+                            </p>
+
+                            <p>
+                                NEXT - So I have started to create one step by step and see how it goes. Test it and fix
+                                it. Then improve and move forward with implementation based on the condition for
+                                different time frame. Now I need to create the code for each time frame to save the data
+                                into database after calculation is done.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
+                    6.6.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - add the code for H1 calculation. Create new database TABLES for
+                                other time frames
+                            </p>
+
+                            <p>
+                                What I have done - add part of the code for H1 calculation based on the hour. Started to
+                                create the code for the other time frames
+                            </p>
+                            <p>
+                                PROBLEM - I have problem creating a solution that will work 100%. When to use the data
+                                for Daily, Weekly and Monthly calculation. What is the best approach to stat
+                                calculation. How to read precise date in the past based on the time frame needed.
+                            </p>
+
+                            <p>
+                                NEXT - So I have started to create one step by step and see how it goes. Test it and fix
+                                it. Then improve and move forward with implementation based on the condition for
+                                different time frame. Now I need to create the code for each time frame to save the data
+                                into database after calculation is done.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
+                    5.6.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - add the code for saving data for different time frames into
+                                database
+                            </p>
+
+                            <p>
+                                What I have done - added tables inside the database for calculation for the different
+                                timeframes. This will save data into tables on specific time frame so it is easier to
+                                fetch the data from the database when needed.
+                            </p>
+                            <p>
+                                PROBLEM - The issue I had today were not code related. Mostly it is the idea how to save
+                                the data and when to save the data. How to create event when to save into 1H database,
+                                when 4H database and so on. It is not easily to change the code so it checks specific
+                                time frame and then calculate and save it.
+                            </p>
+
+                            <p>
+                                NEXT - Change the code based on the hour in the day. It needs to save data into 1H
+                                database each hour. Make calculation for the 1H time frame. Then every 4H, every D1,
+                                every W1 and MN time frame needs to make the calculation. This will need to be done by
+                                using different dates with different hours. This needs to be coded properly so the
+                                calculation is using correct data on specific hour.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
+                    4.6.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - solve the backend part to read the database data for
+                                certain time frame select on the front end
+                            </p>
+
+                            <p>
+                                What I have done - added SQL code to read the database based on the date and
+                                hour. The data is pulled with last 8 records for each symbol.
+                            </p>
+                            <p>
+                                PROBLEM - The issue here is that I have database populated with the data for
+                                strength on the H1 time frame. For other timeframes I do not have data saved.
+                                Now I need to solve the issue how to save data for different time frames. Which
+                                means I need to add more tables inside the database.
+                            </p>
+
+                            <p>
+                                NEXT - I am thinking should I add more tables inside the database for each time
+                                frame, or should I make the calculation from the symbol database on request form
+                                the front end. Third solution would be to have variable ready in memory with
+                                calculated data for the basic request for each time frame. So when the user
+                                calls the data it will be read from the variable. For now I am more inclined to
+                                save it into database and later on I can add temporary variable for saving the
+                                data to speed up the reading data and send it to the front end on the request.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
+                    3.6.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - make a request from the frontend part for different time
+                                frame for the currency strength
+                            </p>
+
+                            <p>
+                                What I have done - added front end part with a drop down menu to select H1, H4,
+                                D1, W1 and MN time frame. And send the data to the backend. AI have added
+                                backend part to receive the variable and send the variable into the neccessary
+                                function.
+                            </p>
+                            <p>
+                                PROBLEM - There was no too much issues.
+                            </p>
+
+                            <p>
+                                NEXT - Addid the part of the code to read the data from the database based on
+                                the time frame select on the frontend
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
 
             </ul>
         </section>
