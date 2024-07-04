@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Self-Taught Developer Journey With Step by Step Taken to become a programmer">
+    <meta name="Author" content="Frano Grgić">
+    <link rel="icon" href="Images/STDIcon.png" type="image/x-icon">
+    <title>Welcome</title>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K7X2KQRY1K"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-K7X2KQRY1K');
+</script>
+
+
+<body>
+    <!--adding header section into the web page-->
+    <header>
+        <h1>Self-Taught Developer Journey - Weekly Report 30</h1>
+
+        <p>
+            Here is a weekly report what I have done and what problems I have experienced. How I have solved those
+            issue.
+        </p>
+
+        <!--here I am making quick links inside the html page to jump to desired section by using section ID. For that it is used nav tag that emphasize that inside we have navigation links-->
+        <nav>
+
+        </nav>
+        <!--adding image as a logo for the website-->
+        <figure>
+            <img src="Images/STDIcon.png" alt="Self-Taught Developer icon" title="STD icon image" height="50" width="50"
+                loading="lazy">
+            <!--adding figcaption which is a text below the image to explain what this image is about-->
+            <figcaption>Self-Taught Developer Icon adding</figcaption>
+        </figure>
+        <div>
+            <a href="/weekly-report-28.html">Previous</a>
+            <a href="/About.html">Next</a>
+            <br>
+            <a href="/index.html">Home</a>
+        </div>
+    </header>
+
+
+    <!--adding main section into the web page-->
+    <main>
+        <!--hr or horizontal rule is a line that is used to divide the section on the page-->
+        <hr>
+        <section id="HTML_Learning">
+            <h2>Weekly Report</h2>
+            <ul>
+                <!--This is the end of a section-->
+                <li>
+                    4.7.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - modify the code for the bar chart so it the width is narrower
+                            </p>
+
+                            <p>
+                                What I have done - small modification inside CSS for the bar chart
+                            </p>
+                            <p>
+                                PROBLEM - there were no problems with this task
+                            </p>
+
+                            <p>
+                                NEXT - create new bar chart that will have columns divided into 10 small bars that will
+                                show strength in percentage up to 100%. This way empty bars will represent weakness.
+                                Filled bars will show the strength
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
+                    3.7.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - create a bar chart with only one value for each symbol I want to
+                                show
+                            </p>
+
+                            <p>
+                                What I have done - created new variables on the fron end in side .ejs file and inside
+                                bar chart .js file. I have changed the previous line chart with an array into bar chart
+                                with single value
+                            </p>
+                            <p>
+                                PROBLEM - I did not know how to pass single value on the bar chart that way expecting
+                                array for each symbol. I have searched for a solution and used ChatGPT to help me find
+                                what is the cause. Befor that I was trying to understand the issue by having console.log
+                                of variables received on the front end and they were sent successfuly as a single value
+                                and not an array
+                            </p>
+
+                            <p>
+                                NEXT - I need check the appearance of the bar chart. I would love to have bar chart
+                                whith steps from minimum to maximum so the user can see the difference. And I want to
+                                shift the lowest value symbol which now start from 0 and it is not visible on the bar
+                                chart because it is set to 0.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
+                    2.7.2024
+                    <ul>
+                        <li>
+                            <p>
+                                <strong>IDEA</strong> - add the new variables for each symbol in the backend and send to
+                                front end that will show on bar chart. But sending only one value for each symbol
+                                instead of an array
+                            </p>
+
+                            <p>
+                                What I have done - created new variables for new bar chart type with only one value
+                                inside each symbol. Then shifted the values for the maximum number in negative. And then
+                                moved all varialbes for that amount so all symbols values start from 0. This will allow
+                                me to create better bar chart in the future to have maximum and minimum bars
+                            </p>
+                            <p>
+                                PROBLEM - how to extract the minimum value from an array. How to save only one value
+                                from an array from specific place, last place in an array.
+                            </p>
+
+                            <p>
+                                NEXT - I need to send back end variable for bar chart to the front end and create new
+                                bar chart with only one value for each of symbol I am using
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+
+
+
+            </ul>
+        </section>
+        <hr>
+
+
+    </main>
+    <!--adding footer section into the web page-->
+    <footer>
+        <p>
+            <a href="#">Back to the top</a>
+        </p>
+        <hr>
+        <p>
+            &lt;&lt;&lt; &copy; <a href="/About.html">Frano Grgić</a> &gt;&gt;&gt;
+        </p>
+        <p>Back to <a href="/">Home</a></p>
+    </footer>
+</body>
+
+</html>
