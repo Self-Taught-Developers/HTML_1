@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Self-Taught Developer Journey With Step by Step Taken to become a programmer">
+    <meta name="Author" content="Frano Grgić">
+    <link rel="icon" href="Images/STDIcon.png" type="image/x-icon">
+    <title>Welcome</title>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K7X2KQRY1K"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-K7X2KQRY1K');
+</script>
+
+
+<body>
+    <!--adding header section into the web page-->
+    <header>
+        <h1>Self-Taught Developer Journey - Weekly Report 32</h1>
+
+        <p>
+            Here is a weekly report what I have done and what problems I have experienced. How I have solved those
+            issue.
+        </p>
+
+        <!--here I am making quick links inside the html page to jump to desired section by using section ID. For that it is used nav tag that emphasize that inside we have navigation links-->
+        <nav>
+
+        </nav>
+        <!--adding image as a logo for the website-->
+        <figure>
+            <img src="Images/STDIcon.png" alt="Self-Taught Developer icon" title="STD icon image" height="50" width="50"
+                loading="lazy">
+            <!--adding figcaption which is a text below the image to explain what this image is about-->
+            <figcaption>Self-Taught Developer Icon adding</figcaption>
+        </figure>
+        <div>
+            <a href="/weekly-report-30.html">Previous</a>
+            <a href="/weekly-report-34.html">Next</a>
+            <br>
+            <a href="/index.html">Home</a>
+        </div>
+    </header>
+
+
+    <!--adding main section into the web page-->
+    <main>
+        <!--hr or horizontal rule is a line that is used to divide the section on the page-->
+        <hr>
+        <section id="HTML_Learning">
+            <h2>Weekly Report</h2>
+            <ul>
+                <iframe width="420" height="315" src="https://youtu.be/7XJ_R9osizc"> </iframe>
+                <!--This is the end of a section-->
+                <li>
+                    18.7.2024
+                    <ul>
+                        <li>
+                            <p>Youtube link: </p>
+                            <p>
+                                <strong>IDEA</strong> - add option for a user to select which date he wants to get the
+                                strength for
+                            </p>
+
+                            <p>
+                                What I have done - I have added part of the code inside .ejs file fro the front end
+                                where the user can select a date. THen I send that value to the back end over POST
+                                request and then I process that value. Inside the backend I pass the value to the
+                                function that retrieves the data from the database based on the date requested.
+                            </p>
+                            <img src="Images/date selection 18.7.2024.jpg" alt="bar chart status 9.7.2024"
+                                title="Bar Chart image" height="200" width="1000" loading="lazy">
+                            <p>
+                                PROBLEM - There were no problems with this
+                            </p>
+
+                            <p>
+                                NEXT - try to move the project to digital ocean droplet so it is live for users
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+
+            </ul>
+        </section>
+        <hr>
+
+
+    </main>
+    <!--adding footer section into the web page-->
+    <footer>
+        <p>
+            <a href="#">Back to the top</a>
+        </p>
+        <hr>
+        <p>
+            &lt;&lt;&lt; &copy; <a href="/About.html">Frano Grgić</a> &gt;&gt;&gt;
+        </p>
+        <p>Back to <a href="/">Home</a></p>
+    </footer>
+</body>
+
+</html>
