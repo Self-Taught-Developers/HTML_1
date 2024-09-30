@@ -60,6 +60,31 @@
                 <iframe width="420" height="315" src="https://youtu.be/7XJ_R9osizc"> </iframe>
                 <!--This is the end of a section-->
                 <li>
+                    30.9.2024
+                    <ul>
+                        <li>
+                            <p>Youtube link: https://youtu.be/TlwLwLRjpx4</p>
+                            <p>
+                                <strong>IDEA</strong> - Changing the code to have / home page and /refresh when new data should be saved into databae. And to have code free from frontend part and backend part.
+                            </p>
+
+                            <p>
+                                What I have done - I have separated one function which calls the API and save the data into database and which sends the data to front end part. Now I have two functions, one is for APi calling and sacing new data into database and second one is reading database and sending the data to front end. This way I have clean up the code so I can easilz manipulate data later on. but the function for saving the data into database is free from other functions.
+                            <img src="Images/Website status 25.9.2024.jpg" alt="bar chart status 9.7.2024"
+                                title="Bar Chart image" height="400" width="1600" loading="lazy">
+                            <p>
+                                PROBLEM - I had issues with forming database client for calling the database. I had each request with new database connection open/close. But better idea is to have one connection with multiple clients. That was done with pool request that gives client for each connection. const { Pool } = pg;
+                            </p>
+
+                            <p>
+                                NEXT - Work on the code to separate main .ejs file into smaller parts so i do nto need to refresh the whole page to refresh the data for one part like one chart. After this change I will request onlz new chart data and the rest of the page will staz the same. This is done with more .ejs files. I have read about this in the udemz course at the beginning. I will return back and watch again how to create more .ejs files and send them from the backend to front end with new data, but only one part of the website page. 
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
                     25.9.2024
                     <ul>
                         <li>
