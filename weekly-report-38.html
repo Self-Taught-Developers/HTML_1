@@ -60,6 +60,32 @@
                 <iframe width="420" height="315" src="https://youtu.be/7XJ_R9osizc"> </iframe>
                 <!--This is the end of a section-->
                 <li>
+                    4.10.2024
+                    <ul>
+                        <li>
+                            <p>Youtube link:</p>
+                            <p>
+                                <strong>IDEA</strong> - change the code so I can use it specific POST request and not to refresh whole web page but only part of the page. This means not loading whole webpage, but small part of the page when user request the change. For example change the chart appearance
+                            </p>
+
+                            <p>
+                                What I have done - I have fetch function in order to get the new data from the database without refreshing the whole web page. This allowed me to have new content for the chart section inside webpage. For now I am using partisl .ejs and fetch function. 
+                            <img src="Images/Website status 25.9.2024.jpg" alt="bar chart status 9.7.2024"
+                                title="Bar Chart image" height="400" width="1600" loading="lazy">
+                            <p>
+                                PROBLEM - I could not find correct way of doing this solution. I had issue with post request because I did not use json format. I way trying to use AJAX method, but found that fetch works better now. And I could not find ajax video tutorial on the internet. But fetch was possible. This is the idea to make a video lesson on fetch method.
+                                Then I could not get the data inside the index.js even the fetch was sending the the post request with the user input. The solution was to include app.use(express.json()); // To parse JSON from POST requests. This allowed to receive json format form the front end.
+                            </p>
+
+                            <p>
+                                NEXT - Now I need to make the same solution for other charts that I have. I will make a template so I can simply copy/paste whenever I have new chart on the page. This will allow me to move the charts on any pages with using .ejs partials. This will speed up and simply the use of teh code through whole website.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <!--This is the end of a section-->
+                <!--This is the end of a section-->
+                <li>
                     1.10.2024
                     <ul>
                         <li>
